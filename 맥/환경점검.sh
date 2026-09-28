@@ -77,9 +77,12 @@ Homebrew가 2026년 9월부터 인텔을 3등급으로 내려, brew install 이
   HOW_CLAUDE='curl -fsSL https://claude.ai/install.sh | bash
 그다음 터미널 창을 닫고 새로 여십시오.
 🙋 연동을 안 붙일 거면 이건 없어도 됩니다.'
-  HOW_NODE='① https://nodejs.org/en/download 를 엽니다
-② macOS 설치본(.pkg)을 받아 두 번 누릅니다 — 인텔·애플 실리콘 겸용입니다
-③ 터미널 창을 닫고 새로 연 뒤  node --version  으로 확인합니다
+  HOW_NODE='mkdir -p ~/.local
+curl -fsSL https://nodejs.org/dist/v24.21.0/node-v24.21.0-darwin-x64.tar.gz | tar -xz -C ~/.local --strip-components=1
+grep -q .local/bin ~/.zprofile 2>/dev/null || echo '\''export PATH="$HOME/.local/bin:$PATH"'\'' >> ~/.zprofile
+그다음 터미널 창을 닫고 새로 연 뒤  node --version  으로 확인합니다.
+🙋 홈 폴더 안에만 깔립니다 — 비밀번호를 묻지 않습니다.
+🙋 더 새 판이 필요하면 https://nodejs.org/dist/ 에서 판 번호만 바꾸시면 됩니다.
 🚫 brew install node 는 인텔에서 실패하거나 몇 시간 걸립니다.'
   HOW_NPX='위 Node.js를 깔면 함께 들어옵니다'
   HOW_PY='Xcode 명령줄 도구를 깔면 함께 들어옵니다.
@@ -91,10 +94,13 @@ Homebrew가 2026년 9월부터 인텔을 3등급으로 내려, brew install 이
 피그마는 중계 방식 대신 공식 연동을 쓰시는 편이 안전합니다 — 담당자에게 물어보십시오.
 꼭 필요하면:  curl -fsSL https://bun.sh/install | bash'
   HOW_GH='① https://github.com/cli/cli/releases 를 엽니다
-② 최신 판에서  gh_…_macOS_amd64.pkg  를 받아 두 번 누릅니다
-③ 그다음:  gh auth login'
-  HOW_CODE='https://code.visualstudio.com/download 에서 Mac 판을 받아
-「응용 프로그램」 폴더로 옮기십시오.
+② 최신 판에서  gh_…_macOS_universal.pkg  를 받아 두 번 누릅니다
+③ 그다음:  gh auth login
+⚠️ 이 설치본은 관리자 비밀번호를 물어봅니다 — 사람이 직접 하셔야 합니다.
+🙋 없어도 시작은 됩니다. 나중에 보태셔도 됩니다.'
+  HOW_CODE='curl -fsSL -o /tmp/vscode.zip https://update.code.visualstudio.com/latest/darwin/stable
+mkdir -p ~/Applications && unzip -qo /tmp/vscode.zip -d ~/Applications && rm /tmp/vscode.zip
+🙋 홈 폴더 안 「응용 프로그램」에 깔립니다 — 비밀번호를 묻지 않습니다.
 code 명령은 VS Code를 열고 ⌘⇧P → "shell command" 로 켭니다.'
   HOW_FIGMA_BUN='① curl -fsSL https://bun.sh/install | bash      ⚠️ 인텔에서는 실패할 수 있습니다'
   HOW_GA_SDK='① https://cloud.google.com/sdk/docs/install-sdk 에서 macOS 64-bit (x86_64) 판을 받아
@@ -305,8 +311,13 @@ w '</style></head><body><div class="wrap">'
 
 w '<h1>환경 점검 결과</h1>'
 w '<div class="nothing"><b>이 점검은 아무것도 설치하지 않았습니다.</b>'
-w '무엇이 있고 없는지만 <b>재서</b> 알려 드립니다. 없는 것에 붙은 명령은'
-w '<b>직접 복사해 붙여 넣어</b> 실행하셔야 합니다 — 그래야 무엇이 깔리는지 보고 하실 수 있습니다.</div>'
+w '무엇이 있고 없는지만 <b>재서</b> 알려 드립니다. 아래 명령을 실행하는 방법은 <b>두 가지</b>입니다.'
+w '<br><br><b>① Claude에게 맡기기</b> — 이 폴더를 Claude 앱에서 열고 <b>/환경세팅-도우미</b> 를 부르십시오.'
+w '아래 명령을 <b>하나씩 물어보며</b> 대신 돌려 줍니다. 무엇을 왜 하는지 매번 알려 드립니다.'
+w '<br><b>② 직접 하기</b> — 명령을 복사해 터미널에 붙여 넣으십시오.'
+w '회사 방침상 명령 실행을 맡길 수 없을 때는 이쪽입니다.'
+w '<br><br>어느 쪽이든 <b>무엇이 도는지는 이 화면에 그대로 적혀 있습니다.</b>'
+w '비밀번호를 묻는 설치와 창을 띄우는 로그인은 <b>어느 쪽이든 사람이 직접</b> 하셔야 합니다.</div>'
 if (( INTEL )); then
   w "<p class=\"when\">$(date '+%Y년 %-m월 %-d일 %H:%M') · 이 컴퓨터: <b>인텔 맥</b> ($ARCH)</p>"
   w '<div class="order"><b>이 컴퓨터는 인텔 맥입니다 — Homebrew를 거치지 않는 길로 안내합니다</b>'
