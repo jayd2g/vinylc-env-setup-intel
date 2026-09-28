@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>환경 세팅 — 이게 다 뭔가요</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+/* ==========================================================
+   VinylC 보고서 디자인 시스템 (버전1) — 프리젠테이션형 인스턴스
+   표시유형: .slide (1280×720 고정) · 모노크롬 · radius 0 · shadow 0
+   ========================================================== */
+
+/* ── tokens/colors ── */
+:root{
+  --black:#1A1A1A; --black-deep:#0D0D0D; --white:#FFFFFF;
+  --gray-50:#FAFAFA; --gray-100:#F5F5F5; --gray-200:#E8E8E8; --gray-300:#D4D4D4;
+  --gray-400:#A3A3A3; --gray-500:#737373; --gray-600:#525252; --gray-700:#404040;
+  --gray-800:#2A2A2A; --gray-900:#1A1A1A;
+  --surface-primary:var(--white); --surface-inverse:var(--black-deep);
+  --surface-subtle:var(--gray-50); --surface-muted:var(--gray-100);
+  --text-primary:var(--black); --text-secondary:var(--gray-600);
+  --text-tertiary:var(--gray-400); --text-inverse:var(--white);
+  --border-default:var(--gray-200); --border-strong:var(--black); --border-subtle:var(--gray-100);
+}
+/* ── tokens/typography ── */
+:root{
+  --font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-mono:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+  --fw-bold:700; --fw-semibold:600; --fw-medium:500; --fw-regular:400; --fw-light:300;
+  --lh-tight:1.2; --lh-normal:1.5; --lh-relaxed:1.7;
+  --ls-tight:-0.02em; --ls-normal:0; --ls-wide:0.05em; --ls-wider:0.1em;
+}
+/* ── tokens/spacing ── */
+:root{
+  --space-3xs:4px; --space-2xs:6px; --space-xs:8px; --space-sm:16px;
+  --space-md:24px; --space-lg:40px; --space-xl:64px; --space-2xl:96px;
+  --slide-w:1280px; --slide-h:720px; --slide-pad-x:80px; --slide-pad-y:60px;
+}
+/* ── tokens/scales — 프리젠테이션형 ── */
+.slide{
+  --fs-body:17px; --fs-body-lg:20px; --fs-body-sm:15px; --fs-caption:13px;
+  --fs-overline:11px; --fs-h1:40px; --fs-h2:32px; --fs-h3:24px; --fs-display:54px;
+  --lh-body:var(--lh-normal);
+  --page-bg:var(--surface-primary); --content-bg:var(--surface-primary); --num-card:40px;
+}
+/* ── base ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:var(--font-family);font-weight:var(--fw-regular);letter-spacing:var(--ls-tight);
+  color:var(--text-primary);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body.slide-doc{background:var(--gray-200);height:100vh;overflow:hidden}
+
+/* ── layout: .slide ── */
+.slide{
+  width:var(--slide-w); height:var(--slide-h);
+  padding:var(--slide-pad-y) var(--slide-pad-x);
+  position:relative; overflow:hidden; page-break-after:always;
+  display:flex; flex-direction:column; background:var(--page-bg);
+  font-size:var(--fs-body); line-height:var(--lh-body);
+}
+.slide__section-label{font-size:var(--fs-overline);font-weight:var(--fw-semibold);
+  text-transform:uppercase;letter-spacing:var(--ls-wider);color:var(--text-tertiary);margin-bottom:var(--space-md)}
+.slide__page-num{position:absolute;bottom:30px;right:var(--slide-pad-x);
+  font-size:var(--fs-caption);font-weight:var(--fw-medium);color:var(--text-tertiary);letter-spacing:var(--ls-wide)}
+.slide__title{font-size:var(--fs-h2);font-weight:var(--fw-bold);line-height:var(--lh-tight);margin-bottom:var(--space-xs)}
+.slide__lead{font-size:var(--fs-body-lg);font-weight:var(--fw-light);color:var(--text-secondary);margin-bottom:var(--space-md)}
+.slide__body{flex:1;min-height:0}
+
+/* ── grids ── */
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md)}
+.card-grid--2{grid-template-columns:repeat(2,1fr)}
+.card-grid--4{grid-template-columns:repeat(4,1fr);gap:var(--space-sm)}
+
+/* ── components A~H ── */
+.numbered-card{display:grid;grid-template-columns:auto 1fr;gap:var(--space-sm);padding:var(--space-md);
+  background:var(--content-bg);border-left:4px solid var(--border-strong);margin-bottom:var(--space-sm)}
+.numbered-card__num{font-size:var(--num-card);font-weight:var(--fw-bold);line-height:1;color:var(--text-primary)}
+.numbered-card__title{font-size:var(--fs-h3);font-weight:var(--fw-semibold);margin-bottom:var(--space-2xs)}
+.numbered-card__body{font-size:var(--fs-body-sm);line-height:var(--lh-body);color:var(--text-secondary)}
+.numbered-card__note{margin-top:var(--space-xs);padding:var(--space-xs) var(--space-sm);
+  background:var(--surface-subtle);border-left:3px solid var(--black);font-size:var(--fs-body-sm);color:var(--text-secondary)}
+
+.grid-card{background:var(--content-bg);border-top:3px solid var(--border-strong);padding:var(--space-md);
+  display:flex;flex-direction:column;gap:var(--space-2xs)}
+.grid-card--bordered{border:1px solid var(--border-default);border-top:1px solid var(--border-default)}
+.grid-card__tag{align-self:flex-start;margin-bottom:var(--space-3xs)}
+.grid-card__title{font-size:var(--fs-h3);font-weight:var(--fw-semibold)}
+.grid-card__eg{font-size:var(--fs-body-sm);color:var(--text-tertiary)}
+.grid-card__body{font-size:var(--fs-body-sm);line-height:var(--lh-body);color:var(--text-secondary)}
+.grid-card--dark{background:var(--surface-inverse);border-top-color:var(--white)}
+.grid-card--dark .grid-card__title{color:var(--text-inverse)}
+.grid-card--dark .grid-card__body{color:var(--gray-400)}
+.grid-card--dark .grid-card__eg{color:var(--gray-500)}
+
+.border-item{border-left:2px solid var(--border-strong);padding-left:var(--space-sm);margin-bottom:var(--space-sm)}
+.border-item__title{font-size:var(--fs-body);font-weight:var(--fw-semibold);margin-bottom:var(--space-3xs)}
+.border-item__desc{font-size:var(--fs-body-sm);line-height:var(--lh-body);color:var(--text-secondary)}
+
+.callout{background:var(--surface-inverse);color:var(--text-inverse);padding:var(--space-md);border-radius:0}
+.callout__title{font-size:var(--fs-body-lg);font-weight:var(--fw-semibold);margin-bottom:var(--space-2xs)}
+.callout__body{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--gray-300)}
+
+.group-header{background:var(--surface-inverse);color:var(--text-inverse);font-size:var(--fs-body-sm);
+  font-weight:var(--fw-semibold);letter-spacing:var(--ls-wide);text-transform:uppercase;
+  padding:var(--space-2xs) var(--space-sm);margin:var(--space-md) 0 var(--space-sm)}
+
+.tag{display:inline-block;font-size:var(--fs-overline);font-weight:var(--fw-semibold);
+  letter-spacing:var(--ls-wider);text-transform:uppercase;padding:4px 12px;background:var(--black);color:var(--white)}
+.tag--outline{background:transparent;color:var(--text-primary);border:1px solid var(--border-strong)}
+.tag--light{background:var(--gray-100);color:var(--text-primary)}
+
+.slide--cover{background:var(--surface-inverse);color:var(--text-inverse);justify-content:flex-end;padding-bottom:80px}
+.slide--cover .cover__title{font-size:var(--fs-display);font-weight:var(--fw-bold);line-height:var(--lh-tight);margin-bottom:var(--space-sm)}
+.slide--cover .cover__subtitle{font-size:var(--fs-body-lg);font-weight:var(--fw-light);color:var(--gray-400);margin-bottom:var(--space-lg)}
+.slide--cover .cover__meta{font-size:var(--fs-caption);color:var(--gray-500);letter-spacing:var(--ls-wide)}
+.slide--cover .cover__line{position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--white);opacity:.15}
+.slide--closing{background:var(--surface-inverse);color:var(--text-inverse);justify-content:center;align-items:center;text-align:center}
+.slide--closing .closing__wordmark{height:36px;margin-bottom:var(--space-lg)}
+.slide--closing .closing__slogan{font-size:var(--fs-body-lg);font-weight:var(--fw-light);color:var(--gray-400);letter-spacing:var(--ls-wide)}
+.slide--closing .closing__slogan-kr{font-size:var(--fs-body);font-weight:var(--fw-light);color:var(--gray-500);margin-top:var(--space-xs)}
+.slide--closing .closing__line{width:40px;height:2px;background:var(--gray-700);margin:var(--space-lg) auto}
+
+/* ── non-integrated ── */
+.prose p{font-size:var(--fs-body);line-height:var(--lh-body);color:var(--text-secondary)}
+.prose p+p{margin-top:var(--space-sm)}
+.prose ul{padding-left:var(--space-md)}
+.prose li{font-size:var(--fs-body);line-height:var(--lh-body);margin-bottom:var(--space-3xs);color:var(--text-secondary)}
+.prose strong{font-weight:var(--fw-semibold);color:var(--text-primary)}
+.toc__item{display:flex;gap:var(--space-md);padding:var(--space-xs) 0;font-size:var(--fs-body-lg);
+  border-bottom:1px solid var(--border-subtle);align-items:baseline}
+.toc__num{font-weight:var(--fw-bold);color:var(--text-tertiary);min-width:44px;font-size:var(--fs-body)}
+.toc__sub{margin-left:auto;font-size:var(--fs-body-sm);color:var(--text-tertiary)}
+.mono,code{font-family:var(--font-mono);font-size:.92em;background:var(--surface-muted);padding:1px 5px}
+.divider{width:100%;height:1px;background:var(--border-default);margin:var(--space-md) 0}
+.divider--strong{height:2px;background:var(--border-strong)}
+.figure{margin:var(--space-sm) 0 0}
+.figure__svg{width:100%;height:auto;display:block}
+.figure__caption{font-size:var(--fs-caption);color:var(--text-tertiary);margin-top:var(--space-2xs);text-align:center}
+
+/* ── figure 내부 SVG — diagram-design 규칙 (색·선두께·폰트만 브랜드 값) ── */
+.dg{width:100%;height:auto;display:block}
+.dg .z{fill:rgba(26,26,26,.02);stroke:rgba(26,26,26,.12);stroke-width:.8}
+.dg .zl{font-size:12px;fill:#737373}
+.dg .msk{fill:#FFFFFF}
+.dg .n{fill:#FFFFFF;stroke:#1A1A1A;stroke-width:1}
+.dg .nf{fill:#0D0D0D;stroke:#0D0D0D;stroke-width:1.5}
+.dg .ns{fill:rgba(26,26,26,.03);stroke:rgba(26,26,26,.30);stroke-width:1}
+.dg .eb{font-size:8px;fill:#A3A3A3;font-family:var(--font-mono);letter-spacing:.14em}
+.dg .nm{font-size:16px;font-weight:600;fill:#1A1A1A;letter-spacing:-.01em}
+.dg .nmw{font-size:16px;font-weight:600;fill:#FFFFFF;letter-spacing:-.01em}
+.dg .nmx{font-size:20px;font-weight:600;fill:#1A1A1A;letter-spacing:-.01em}
+.dg .sl{font-size:12px;fill:#525252}
+.dg .slw{font-size:12px;fill:#A3A3A3}
+.dg .mono{font-family:var(--font-mono)}
+.dg .al{font-size:12px;fill:#737373}
+.dg .c{stroke:#525252;stroke-width:1.2;fill:none}
+.dg .ci{stroke:#1A1A1A;stroke-width:1.6;fill:none}
+.dg .cd{stroke:#A3A3A3;stroke-width:1;fill:none;stroke-dasharray:4 3}
+.dg .stop{stroke:#A3A3A3;stroke-width:1.2;fill:none}
+
+/* ── 용어 링크 · 팝업 ── */
+.term{cursor:pointer}
+svg .term text:first-of-type{text-decoration:underline;text-decoration-style:dotted;text-underline-offset:4px}
+.term-in{cursor:pointer;border-bottom:1px dotted currentColor;padding-bottom:1px}
+.term:hover .qm,.term-in:hover{opacity:.62}
+#pop{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center}
+#pop[hidden]{display:none}
+#pop-back{position:absolute;inset:0;background:rgba(13,13,13,.72)}
+#pop-card{position:relative;background:var(--white);color:var(--text-primary);
+  width:min(680px,88vw);max-height:84vh;overflow:auto;padding:40px 44px 36px;
+  border-left:4px solid var(--black);border-radius:0}
+#pop-x{position:absolute;top:16px;right:16px;appearance:none;border:1px solid var(--border-default);
+  background:transparent;color:var(--text-secondary);font-family:inherit;font-size:14px;
+  line-height:1;padding:7px 11px;cursor:pointer;border-radius:0}
+#pop-x:hover{background:var(--surface-muted)}
+#pop-x:focus-visible{outline:2px solid var(--black);outline-offset:2px}
+#pop .pop-eb{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-tertiary);margin:0 0 10px}
+#pop h2{font-size:30px;font-weight:700;letter-spacing:-.015em;line-height:1.25;margin:0 0 6px}
+#pop .pop-one{font-size:19px;font-weight:600;color:var(--text-primary);margin:0 0 18px;line-height:1.5}
+#pop p{font-size:16px;line-height:1.7;color:var(--text-secondary);margin:0 0 12px}
+#pop .pop-row{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:11px 0;
+  border-bottom:1px solid var(--border-subtle);align-items:baseline}
+#pop .pop-row b{font-size:14px;font-weight:600;color:var(--text-primary)}
+#pop .pop-row span{font-size:15px;line-height:1.6;color:var(--text-secondary)}
+#pop .pop-note{margin-top:18px;padding:14px 18px;background:var(--surface-inverse);color:var(--gray-300);
+  font-size:15px;line-height:1.6}
+#pop .pop-note b{color:var(--white)}
+#pop code{font-family:var(--font-mono);font-size:.9em;background:var(--surface-muted);padding:1px 5px}
+
+/* ── 뷰어 (화면 전용 · 인쇄 시 제거) ── */
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#scaler{width:var(--slide-w);height:var(--slide-h);transform-origin:center center;position:relative}
+#scaler .slide{position:absolute;inset:0;display:none}
+#scaler .slide.is-on{display:flex}
+#nav{position:fixed;left:0;right:0;bottom:0;height:44px;display:flex;align-items:center;justify-content:center;
+  gap:var(--space-sm);background:var(--black-deep);color:var(--white);z-index:10}
+#nav button{appearance:none;border:1px solid var(--gray-700);background:transparent;color:var(--white);
+  font-family:inherit;font-size:14px;font-weight:600;padding:4px 14px;cursor:pointer;border-radius:0;letter-spacing:.05em}
+#nav button:hover{background:var(--gray-800)}
+#nav button:disabled{opacity:.3;cursor:default}
+#counter{font-size:13px;letter-spacing:.1em;color:var(--gray-400);min-width:86px;text-align:center;font-variant-numeric:tabular-nums}
+#nav .hint{position:absolute;right:16px;font-size:11px;letter-spacing:.08em;color:var(--gray-600)}
+#stage{bottom:44px}
+/* 발표 모드 — 아래 막대를 감추고 화면을 가득 쓴다 */
+body.is-fs #nav{display:none}
+body.is-fs #stage{bottom:0}
+#fs-hint{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:30;
+  background:var(--black-deep);color:var(--gray-300);font-size:13px;letter-spacing:.04em;
+  padding:9px 18px;border-radius:0;opacity:0;transition:opacity .25s;pointer-events:none}
+#fs-hint.on{opacity:1}
+
+@media print{
+  body.slide-doc{background:#fff;height:auto;overflow:visible}
+  #nav,#pop{display:none!important}
+  #stage{position:static;display:block;inset:auto}
+  #scaler{width:auto;height:auto;transform:none!important}
+  #scaler .slide{position:static;display:flex!important}
+  @page{size:1280px 720px;margin:0}
+}
+</style>
+</head>
+<body class="slide-doc">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <marker id="dgA" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#525252"/></marker>
+  <marker id="dgAI" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#1A1A1A"/></marker>
+  <marker id="dgAS" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#A3A3A3"/></marker>
+</defs></svg>
+
+<div id="stage"><div id="scaler">
+
+<!-- ── 표지 ─────────────────────────────────────────── -->
+<section class="slide slide--cover">
+  <div class="cover__title">환경 세팅,<br>이게 다 뭔가요</div>
+  <div class="cover__subtitle">외우실 것 없습니다. “이런 게 있구나”만 가져가시면 됩니다.</div>
+  <div class="cover__meta">바이널씨 워크샵 · 환경 세팅 설명글</div>
+  <div class="cover__line"></div>
+</section>
+
+<!-- ── 목차 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">CONTENTS</div>
+  <h1 class="slide__title">차례</h1>
+  <div class="slide__body" style="margin-top:var(--space-md)">
+    <div class="toc__item"><span class="toc__num">01</span><span>들어가며</span><span class="toc__sub">사실은, 하실 게 없습니다</span></div>
+    <div class="toc__item"><span class="toc__num">02</span><span>그럼에도</span><span class="toc__sub">익숙해지는 데는 도움이 됩니다</span></div>
+    <div class="toc__item"><span class="toc__num">03</span><span>개념 ① Claude에 닿는 세 가지 길</span><span class="toc__sub">Claude는 ‘모델 이름’입니다</span></div>
+    <div class="toc__item"><span class="toc__num">04</span><span>개념 ② chat과 code</span><span class="toc__sub">chat은 ‘말’, code는 ‘손’</span></div>
+    <div class="toc__item"><span class="toc__num">05</span><span>개념 ③ 환경 세팅 — 무엇을 까는가</span><span class="toc__sub">파이썬 · brew · node.js · git</span></div>
+    <div class="toc__item"><span class="toc__num">06</span><span>개념 ④ 환경 관리 — 무엇을 이어 붙이는가</span><span class="toc__sub">연결 · 매뉴얼 · 조수</span></div>
+    <div class="toc__item"><span class="toc__num">07</span><span>그래서, 지금 하실 것</span><span class="toc__sub">세 번이면 끝납니다</span></div>
+  </div>
+  <span class="slide__page-num">02</span>
+</section>
+
+<!-- ── 01 들어가며 ──────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">01 — INTRO</div>
+  <h1 class="slide__title">들어가며</h1>
+  <p class="slide__lead">사실은, 하실 게 없습니다.</p>
+  <div class="slide__body">
+    <div class="prose" style="margin-bottom:var(--space-lg)">
+      <p style="font-size:var(--fs-h3);color:var(--text-primary);font-weight:var(--fw-semibold)">영민님은 3일 만에 앱을 하나 만드셨습니다.</p>
+      <p>그때 영민님께 드린 말씀은 이것뿐이었습니다.</p>
+    </div>
+    <div class="callout">
+      <div class="callout__title">“Code 탭을 누르시고, 필요한 환경 세팅부터 전부 Claude에게 물어보세요.”</div>
+      <div class="callout__body">교육이라고 할 만한 게 있다면, 저보다 Claude가 훨씬 잘합니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">03</span>
+</section>
+
+<!-- ── 02 그럼에도 ──────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">02 — WHY</div>
+  <h1 class="slide__title">그럼에도</h1>
+  <p class="slide__lead">익숙해지는 데는 도움이 됩니다.</p>
+  <div class="slide__body" style="display:flex;flex-direction:column;justify-content:center">
+    <div class="prose" style="margin-bottom:var(--space-lg)">
+      <p style="font-size:var(--fs-body-lg)">그럼에도 기본적인 환경 세팅은, 이 도구에 익숙해지는 데 분명 도움이 될 것입니다.</p>
+    </div>
+    <div class="divider divider--strong" style="width:40px;margin:0 0 var(--space-md)"></div>
+    <p style="font-size:var(--fs-h1);font-weight:var(--fw-bold);line-height:var(--lh-tight)">이 워크샵은<br>그것을 위한 시간입니다.</p>
+  </div>
+  <span class="slide__page-num">04</span>
+</section>
+
+<!-- ── 03-1 세 가지 길 ─────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">03 — PATHS</div>
+  <h1 class="slide__title">개념 ① Claude에 닿는 세 가지 길</h1>
+  <p class="slide__lead">Claude는 ‘모델 이름’입니다. 가는 길이 여럿일 뿐입니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 320" role="img" aria-labelledby="dg-paths-title dg-paths-desc">
+        <title id="dg-paths-title">Claude에 닿는 세 가지 길</title>
+        <desc id="dg-paths-desc">터미널·데스크탑 앱·IDE 세 경로가 모두 같은 Claude 모델에 닿으며, 워크샵에서는 데스크탑 앱 경로를 택한다.</desc>
+        <path class="c" d="M 380,44 H 552 Q 560,44 560,52 V 112 Q 560,120 568,120 H 740" marker-end="url(#dgA)"/>
+        <path class="ci" d="M 380,160 H 740" marker-end="url(#dgAI)"/>
+        <path class="c" d="M 380,276 H 552 Q 560,276 560,268 V 208 Q 560,200 568,200 H 740" marker-end="url(#dgA)"/>
+        <rect class="msk" x="508" y="136" width="104" height="16"/>
+        <text class="al" x="560" y="148" text-anchor="middle" style="fill:#1A1A1A">우리가 고를 길</text>
+        <rect class="n" x="0" y="8" width="380" height="72" rx="6"/>
+        <text class="eb" x="24" y="28">TERMINAL</text>
+        <g class="term" data-pop="terminal">
+          <text class="nm" x="24" y="52">터미널</text>
+          <rect class="qm" x="88" y="36" width="16" height="16" rx="2" fill="none" stroke="#A3A3A3" stroke-width=".8"/>
+          <text class="qm" x="96" y="48" text-anchor="middle" font-size="12" fill="#737373">?</text>
+        </g>
+        <text class="sl mono" x="24" y="72">claude</text>
+        <rect class="nf" x="0" y="124" width="380" height="72" rx="6"/>
+        <text class="eb" x="24" y="144">DESKTOP APP</text>
+        <text class="nmw" x="24" y="168">데스크탑 앱</text>
+        <text class="slw" x="24" y="188">지금 쓰고 계신 방법</text>
+        <rect class="n" x="0" y="240" width="380" height="72" rx="6"/>
+        <text class="eb" x="24" y="260">IDE</text>
+        <g class="term" data-pop="ide">
+          <text class="nm" x="24" y="284">IDE</text>
+          <rect class="qm" x="64" y="268" width="16" height="16" rx="2" fill="none" stroke="#A3A3A3" stroke-width=".8"/>
+          <text class="qm" x="72" y="280" text-anchor="middle" font-size="12" fill="#737373">?</text>
+        </g>
+        <text class="sl" x="24" y="304">VS Code · JetBrains</text>
+        <rect class="ns" x="740" y="84" width="380" height="152" rx="6"/>
+        <text class="eb" x="930" y="124" text-anchor="middle">MODEL</text>
+        <text class="nmx" x="930" y="160" text-anchor="middle">Claude</text>
+        <text class="sl" x="930" y="188" text-anchor="middle">앤트로픽이 만든 생성형 LLM</text>
+      </svg>
+      <figcaption class="figure__caption">세 길 모두 같은 모델에 닿는다. 달라지는 것은 경로뿐이다.</figcaption>
+    </figure>
+  </div>
+  <span class="slide__page-num">05</span>
+</section>
+
+<!-- ── 03-2 ①② ────────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">03 — PATHS</div>
+  <h1 class="slide__title">터미널과 데스크탑 앱</h1>
+  <p class="slide__lead">우리가 택할 것은 ②입니다.</p>
+  <div class="slide__body">
+    <div class="card-grid card-grid--2">
+      <div class="grid-card">
+        <span class="tag tag--outline grid-card__tag">01 Terminal</span>
+        <div class="grid-card__title"><span class="term-in" data-pop="terminal">터미널</span>에서 <code>claude</code> 를 칩니다</div>
+        <div class="grid-card__body">
+          정석적이고, 안 익숙하고, 재미없고, 한글에 잘 안 어울리지만 — <strong>유능한 방법</strong>입니다.<br><br>
+          다양한 명령을 쓸 수 있고, 파일을 읽고 고칠 권한도 편하게 줄 수 있습니다.
+        </div>
+      </div>
+      <div class="grid-card grid-card--dark">
+        <span class="tag grid-card__tag" style="background:var(--white);color:var(--black)">02 Desktop · 우리가 택할 방법</span>
+        <div class="grid-card__title">Claude 데스크탑 앱을 실행합니다</div>
+        <div class="grid-card__body">
+          가장 쉽고, 눈으로 알아보기도 편합니다.<br><br>
+          다만 <strong style="color:var(--white)">일부는 재미없는 터미널에서 해야 합니다.</strong>
+          Claude를 쓰는 일과는 무관하게, 도구를 깔 때 그렇습니다.
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide__page-num">06</span>
+</section>
+
+<!-- ── 03-3 ③ IDE ─────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">03 — PATHS</div>
+  <h1 class="slide__title">③ <span class="term-in" data-pop="ide">IDE</span>에서 쓰기 — 사실은 두 가지입니다</h1>
+  <p class="slide__lead">이름이 비슷해 섞이기 쉽지만, 서로 다른 이야기입니다.</p>
+  <div class="slide__body">
+    <div class="card-grid card-grid--2" style="margin-bottom:var(--space-md)">
+      <div class="grid-card grid-card--bordered" style="border-left:4px solid var(--black)">
+        <span class="tag tag--light grid-card__tag">③-가</span>
+        <div class="grid-card__title">Claude Code를 IDE에 붙이기</div>
+        <div class="grid-card__eg">VS Code · JetBrains 공식 확장</div>
+        <div class="grid-card__body">
+          터미널·데스크탑 앱과 <strong>똑같은 Claude Code가 그대로 도는 것</strong>입니다.
+          같은 계정, 같은 사용량을 씁니다. 사용량 확인도 됩니다.
+        </div>
+      </div>
+      <div class="grid-card grid-card--bordered" style="border-left:4px solid var(--gray-300)">
+        <span class="tag tag--light grid-card__tag">③-나</span>
+        <div class="grid-card__title">다른 IDE에 API 키를 꽂아 ‘모델만’ 쓰기</div>
+        <div class="grid-card__eg">Cursor 등</div>
+        <div class="grid-card__body">
+          말 그대로 <strong>모델만 땡겨오는 것</strong>이라, 사용량 리셋이나 현재 사용량 확인 같은
+          모델 이용에 딸린 기능이 없습니다. 요금도 따로 셉니다.
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="callout__title">이런 이용 방법 중에, 우리는 ②를 택하려고 합니다.</div>
+      <div class="callout__body">여러 에이전트를 동시에 쓸 땐 IDE가 좋지만, 우리가 쓰기엔 쓸데없이 복잡하다는 인상이 살짝 있습니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">07</span>
+</section>
+
+<!-- ── 04-1 chat과 code ───────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">04 — CHAT &amp; CODE</div>
+  <h1 class="slide__title">개념 ② chat과 code</h1>
+  <p class="slide__lead">chat은 ‘말’, code는 ‘손’입니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 296" role="img" aria-labelledby="dg-code-title dg-code-desc">
+        <title id="dg-code-title">chat과 code의 차이</title>
+        <desc id="dg-code-desc">같은 Claude 모델을 쓰지만 code 화면만 내 컴퓨터의 파일까지 이어지고, chat 화면은 파일에 닿지 않는다.</desc>
+        <path class="c" d="M 280,132 H 344 Q 352,132 352,124 V 68 Q 352,60 360,60 H 420" marker-end="url(#dgA)"/>
+        <path class="c" d="M 280,164 H 344 Q 352,164 352,172 V 228 Q 352,236 360,236 H 420" marker-end="url(#dgA)"/>
+        <path class="ci" d="M 720,236 H 856" marker-end="url(#dgAI)"/>
+        <rect class="msk" x="740" y="212" width="96" height="16"/>
+        <text class="al" x="788" y="224" text-anchor="middle" style="fill:#1A1A1A">손이 닿습니다</text>
+        <path class="cd" d="M 720,60 H 776"/>
+        <path class="stop" d="M 784,44 V 76"/>
+        <text class="sl" x="800" y="64" style="fill:#A3A3A3">파일에 손이 닿지 않습니다</text>
+        <rect class="ns" x="0" y="104" width="280" height="88" rx="6"/>
+        <text class="eb" x="24" y="132">MODEL</text>
+        <text class="nm" x="24" y="156">Claude</text>
+        <text class="sl" x="24" y="176">둘 다 같은 모델</text>
+        <rect class="n" x="420" y="16" width="300" height="88" rx="6"/>
+        <text class="eb" x="444" y="44">CHAT</text>
+        <text class="nm" x="444" y="68">대화 중심</text>
+        <text class="sl" x="444" y="88">말로 알려 줍니다</text>
+        <rect class="nf" x="420" y="192" width="300" height="88" rx="6"/>
+        <text class="eb" x="444" y="220">CODE</text>
+        <text class="nmw" x="444" y="244">실행 중심</text>
+        <text class="slw" x="444" y="264">직접 합니다</text>
+        <rect class="n" x="856" y="192" width="264" height="88" rx="6"/>
+        <text class="eb" x="880" y="220">FILES</text>
+        <text class="nm" x="880" y="244">내 컴퓨터의 파일</text>
+        <text class="sl" x="880" y="264">읽기 · 쓰기 · 정리 · 삭제</text>
+      </svg>
+      <figcaption class="figure__caption">같은 모델이다. 다른 것은 <b>파일까지 이어지는 길이 있느냐</b>이다.</figcaption>
+    </figure>
+  </div>
+  <span class="slide__page-num">08</span>
+</section>
+
+<!-- ── 04-2 왜 code인가 ───────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">04 — CHAT &amp; CODE</div>
+  <h1 class="slide__title">왜 code와 일하는가</h1>
+  <p class="slide__lead">개발사가 구성한 것과는 조금 다르게, 이렇게 이해하시면 좋습니다.</p>
+  <div class="slide__body">
+    <div style="margin-bottom:var(--space-md)">
+      <div class="border-item"><div class="border-item__title">Claude</div><div class="border-item__desc">모델 이름</div></div>
+      <div class="border-item"><div class="border-item__title">데스크탑 앱의 chat</div><div class="border-item__desc">Claude 모델을 이용한 ‘대화’ 중심 화면</div></div>
+      <div class="border-item"><div class="border-item__title">데스크탑 앱의 code</div><div class="border-item__desc">Claude 모델을 이용한 ‘실행’ 중심 화면</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="prose">
+      <p>엄밀하게는, 당연히 Claude Code는 <strong>코딩을 하기 좋게</strong> 만들어진 도구입니다. 그런데 —</p>
+      <p style="font-size:var(--fs-h3);color:var(--text-primary);font-weight:var(--fw-semibold);margin-top:var(--space-sm)">우리가 만드는 모든 파일은 사실 코드로 되어 있습니다.</p>
+      <p>그리고 얘는 권한이 다양합니다. 파일을 읽고, 쓰고, 정리하고, 지우는 걸 다 할 수 있습니다.
+         <strong>그래서 얘하고 같이 일을 하는 게 편안합니다.</strong></p>
+    </div>
+  </div>
+  <span class="slide__page-num">09</span>
+</section>
+
+<!-- ── 05-1 무엇을 까는가 ─────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">05 — SETUP</div>
+  <h1 class="slide__title">개념 ③ 환경 세팅 — 무엇을 까는가</h1>
+  <p class="slide__lead">시키면 알아서 해줍니다. 다만 뭘 하는지는 아셔야 합니다.</p>
+  <div class="slide__body">
+    <div class="card-grid card-grid--4" style="margin-bottom:var(--space-md)">
+      <div class="grid-card"><div class="grid-card__title">파이썬</div>
+        <div class="grid-card__body">Claude가 그 자리에서 프로그램을 짜서 돌리는 자리</div>
+        <div class="grid-card__eg">맥에는 대개 이미 있습니다</div></div>
+      <div class="grid-card"><div class="grid-card__title">brew</div>
+        <div class="grid-card__body">터미널에서 쓰는 앱스토어 — 한 줄로 깔아 줍니다</div>
+        <div class="grid-card__eg">맥 전용 · 인텔 맥은 건너뜁니다</div></div>
+      <div class="grid-card"><div class="grid-card__title">node.js</div>
+        <div class="grid-card__body">자바스크립트를 돌리는 ‘환경’</div>
+        <div class="grid-card__eg">연결(MCP) 대부분이 여기서 돕니다</div></div>
+      <div class="grid-card"><div class="grid-card__title">git</div>
+        <div class="grid-card__body">되돌리기 기록장 — 한 판씩 저장해 둡니다</div>
+        <div class="grid-card__eg">저장은 Claude가 대신 누릅니다</div></div>
+    </div>
+    <div class="callout">
+      <div class="callout__title">넷 다 Claude가 일할 수 있게 바닥을 까는 것입니다.</div>
+      <div class="callout__body">직접 쓰실 일은 거의 없습니다. Claude Code한테 시키면 알아서 해줍니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">10</span>
+</section>
+
+<!-- ── 05-2 파이썬 · brew ─────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">05 — SETUP</div>
+  <h1 class="slide__title">파이썬 · brew</h1>
+  <div class="slide__body" style="margin-top:var(--space-sm)">
+    <div class="numbered-card">
+      <div class="numbered-card__num">01</div>
+      <div>
+        <div class="numbered-card__title">파이썬</div>
+        <div class="numbered-card__body">
+          프로그래밍 언어입니다. 이걸 깔아 두면, Claude Code가 필요할 때 <strong>자기가 필요한 프로그램을 짜서 그걸 돌립니다.</strong><br>
+          예를 들어 “화면 A와 B를 비교해줘” 하면, Claude Code는 파이썬으로 비교하는 프로그램을 짜고 그걸 돌릴 수 있습니다.
+        </div>
+        <div class="numbered-card__note">맥에는 파이썬이 이미 들어 있는 경우가 많습니다. 점검기가 재 보고 <strong>없을 때만</strong> 깔자고 합니다.</div>
+      </div>
+    </div>
+    <div class="numbered-card">
+      <div class="numbered-card__num">02</div>
+      <div>
+        <div class="numbered-card__title">brew</div>
+        <div class="numbered-card__body">
+          앱스토어 같은 겁니다. 근데 사람이 눈으로 보고 고르는 게 아니고,
+          <strong>터미널에서 필요한 걸 쉽게 설치하게 도와주는</strong> 겁니다.
+        </div>
+        <div class="numbered-card__note"><strong>맥 전용입니다.</strong> 윈도우에는 brew가 없고, 같은 자리에 해당하는 다른 것을 씁니다. 윈도우용 점검기가 무엇을 어떻게 깔지 알려 줍니다.</div>
+        <div class="numbered-card__note"><strong>인텔 맥이면 brew를 아예 건너뜁니다.</strong> 2026년 9월부터 Homebrew가 인텔 맥 지원을 3등급으로 내려, 설치가 몇 시간 걸리거나 실패합니다. 점검기가 알아서 <strong>직접 받는 길</strong>로 안내하니 신경 쓰지 않으셔도 됩니다.</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide__page-num">11</span>
+</section>
+
+<!-- ── 05-3 node.js · git ─────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">05 — SETUP</div>
+  <h1 class="slide__title">node.js · git</h1>
+  <div class="slide__body" style="margin-top:var(--space-sm)">
+    <div class="numbered-card">
+      <div class="numbered-card__num">03</div>
+      <div>
+        <div class="numbered-card__title">node.js</div>
+        <div class="numbered-card__body">
+          자바스크립트 기반의 일종의 ‘환경’입니다. 이걸 깔아 두면 node.js를 가지고도 필요한 프로그램을 짜고 돌려 줍니다.
+        </div>
+        <div class="numbered-card__note">
+          <strong>사실 진짜 이유는 따로 있습니다</strong> — 뒤에 나올 <strong>연결(MCP)</strong>의 상당수가 node.js 위에서 돕니다.
+          그래서 연결을 붙이시려면 node.js가 먼저 있어야 합니다. 다만 웹 주소로 붙는 연결은 node.js 없이도 됩니다.
+        </div>
+      </div>
+    </div>
+    <div class="numbered-card">
+      <div class="numbered-card__num">04</div>
+      <div>
+        <div class="numbered-card__title">git — 되돌리기 기록장</div>
+        <div class="numbered-card__body">
+          고친 것을 <strong>한 판씩 저장</strong>해 둬서, 잘못돼도 그 지점으로 돌아갈 수 있습니다.
+          저장 버튼은 사람이 눌러야 하는데 — <strong>그걸 Claude가 대신 눌러 줍니다.</strong>
+        </div>
+        <div class="numbered-card__note">Claude에 연동해 두면 내가 만든 걸 등록하고, 쉽게 <strong>공유하거나 배포</strong>할 수 있습니다.</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide__page-num">12</span>
+</section>
+
+<!-- ── 05-4 git과 GitHub ──────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">05 — SETUP</div>
+  <h1 class="slide__title">git과 GitHub은 다른 것입니다</h1>
+  <p class="slide__lead">구글드라이브를 닮은 것은 GitHub 쪽입니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 264" role="img" aria-labelledby="dg-git-title dg-git-desc">
+        <title id="dg-git-title">git과 GitHub</title>
+        <desc id="dg-git-desc">git은 내 컴퓨터 안에서 작업 폴더를 한 판씩 저장하고 되돌리는 기록장이고, GitHub은 그 기록을 인터넷에 올려 나누는 서비스다.</desc>
+        <rect class="z" x="0" y="32" width="696" height="200" rx="8"/>
+        <rect class="msk" x="20" y="24" width="104" height="16"/>
+        <text class="zl" x="28" y="36">내 컴퓨터 안</text>
+        <rect class="z" x="728" y="32" width="392" height="200" rx="8"/>
+        <rect class="msk" x="748" y="24" width="60" height="16"/>
+        <text class="zl" x="756" y="36">인터넷</text>
+        <path class="ci" d="M 272,112 H 392" marker-end="url(#dgAI)"/>
+        <rect class="msk" x="284" y="88" width="96" height="16"/>
+        <text class="al" x="332" y="100" text-anchor="middle" style="fill:#1A1A1A">한 판 저장</text>
+        <path class="cd" d="M 392,152 H 272" marker-end="url(#dgAS)"/>
+        <rect class="msk" x="292" y="160" width="80" height="16"/>
+        <text class="al" x="332" y="172" text-anchor="middle">되돌리기</text>
+        <path class="c" d="M 664,132 H 760" marker-end="url(#dgA)"/>
+        <rect class="msk" x="680" y="108" width="64" height="16"/>
+        <text class="al" x="712" y="120" text-anchor="middle">올리기</text>
+        <rect class="n" x="32" y="64" width="240" height="136" rx="6"/>
+        <text class="eb" x="56" y="96">FOLDER</text>
+        <text class="nm" x="56" y="124">작업 폴더</text>
+        <text class="sl" x="56" y="148">지금 고치고 있는 것</text>
+        <rect class="nf" x="392" y="64" width="272" height="136" rx="6"/>
+        <text class="eb" x="416" y="96">GIT</text>
+        <text class="nmw" x="416" y="124">되돌리기 기록장</text>
+        <text class="slw" x="416" y="148">저장 버튼은 Claude가</text>
+        <text class="slw" x="416" y="172">대신 눌러 줍니다</text>
+        <rect class="ns" x="760" y="64" width="328" height="136" rx="6"/>
+        <text class="eb" x="784" y="96">GITHUB</text>
+        <text class="nm" x="784" y="124">인터넷에 올린 사본</text>
+        <text class="sl" x="784" y="148">나누고, 배포합니다</text>
+        <text class="sl" x="784" y="172">구글드라이브를 닮은 쪽</text>
+      </svg>
+      <figcaption class="figure__caption">git은 내 컴퓨터 안의 도구, GitHub은 그 기록을 올려 두는 인터넷 서비스다.</figcaption>
+    </figure>
+  </div>
+  <span class="slide__page-num">13</span>
+</section>
+
+<!-- ── 06-1 MCP ──────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">06 — MANAGE</div>
+  <h1 class="slide__title">개념 ④ 환경 관리 — MCP</h1>
+  <p class="slide__lead">MCP는 일종의 연결 도구입니다. 콘센트에 가깝습니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 312" role="img" aria-labelledby="dg-mcp-title dg-mcp-desc">
+        <title id="dg-mcp-title">MCP 연결</title>
+        <desc id="dg-mcp-desc">Claude가 MCP라는 연결 통로를 거쳐 구글 애널리틱스·피그마·태스크월드 같은 바깥 서비스를 직접 다룬다.</desc>
+        <path class="ci" d="M 280,156 H 376" marker-end="url(#dgAI)"/>
+        <path class="c" d="M 576,132 H 620 Q 628,132 628,124 V 52 Q 628,44 636,44 H 680" marker-end="url(#dgA)"/>
+        <path class="c" d="M 576,156 H 680" marker-end="url(#dgA)"/>
+        <path class="c" d="M 576,180 H 620 Q 628,180 628,188 V 260 Q 628,268 636,268 H 680" marker-end="url(#dgA)"/>
+        <rect class="nf" x="0" y="108" width="280" height="96" rx="6"/>
+        <text class="eb" x="24" y="140">CODE</text>
+        <text class="nmw" x="24" y="164">Claude</text>
+        <text class="slw" x="24" y="184">데스크탑 앱의 code</text>
+        <rect class="n" x="376" y="108" width="200" height="96" rx="6"/>
+        <text class="eb" x="400" y="140">MCP</text>
+        <text class="nm" x="400" y="164">연결 통로</text>
+        <text class="sl" x="400" y="184">꽂으면 이어집니다</text>
+        <rect class="ns" x="680" y="8" width="440" height="72" rx="6"/>
+        <text class="eb" x="704" y="32">GA</text>
+        <text class="nm" x="704" y="52">구글 애널리틱스</text>
+        <text class="sl" x="704" y="72">데이터를 읽고 분석합니다</text>
+        <rect class="ns" x="680" y="120" width="440" height="72" rx="6"/>
+        <text class="eb" x="704" y="144">FIGMA</text>
+        <text class="nm" x="704" y="164">피그마</text>
+        <text class="sl" x="704" y="184">그림을 그립니다 · 월 한도 있음</text>
+        <rect class="ns" x="680" y="232" width="440" height="72" rx="6"/>
+        <text class="eb" x="704" y="256">TASKWORLD</text>
+        <text class="nm" x="704" y="276">태스크월드</text>
+        <text class="sl" x="704" y="296">받아오거나, 씁니다</text>
+      </svg>
+      <figcaption class="figure__caption">MCP는 콘센트에 가깝다 — 꽂아 두면 Claude가 그 서비스를 직접 만진다.</figcaption>
+    </figure>
+    <div class="numbered-card__note" style="margin-top:var(--space-sm);border-left-color:var(--black)">
+      <strong>피그마는 미리 알아 두실 것</strong> — 호출 한도가 <strong>월 단위</strong>로 꽤 빡빡합니다.
+      다 쓰면 그리기는 물론 <strong>읽기까지 막히고</strong>, 월 단위라 기다린다고 풀리지 않습니다.
+    </div>
+  </div>
+  <span class="slide__page-num">14</span>
+</section>
+
+<!-- ── 06-2 스킬 · 에이전트 ───────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">06 — MANAGE</div>
+  <h1 class="slide__title">스킬과 에이전트</h1>
+  <p class="slide__lead">스킬은 매뉴얼, 에이전트는 그 매뉴얼을 들고 일하는 조수입니다.</p>
+  <div class="slide__body">
+    <div class="card-grid card-grid--2" style="margin-bottom:var(--space-md)">
+      <div class="grid-card">
+        <span class="tag tag--outline grid-card__tag">SKILL</span>
+        <div class="grid-card__title">스킬 — 매뉴얼</div>
+        <div class="grid-card__body">
+          Claude는 뭐든 잘하지만, <strong>더 잘하게 하는 방법</strong>이 스킬입니다.
+          사람들이 만들어 둔 스킬을 활용하면 좋습니다.<br><br>
+          설치하고 해당 스킬을 써 달라고 얘기하면,
+          <strong>‘매뉴얼을 읽고 거기 써 있는 대로 일해라’</strong>고 지시하는 것입니다.
+        </div>
+      </div>
+      <div class="grid-card">
+        <span class="tag tag--outline grid-card__tag">AGENT</span>
+        <div class="grid-card__title">에이전트 — 역할이 정해진 조수</div>
+        <div class="grid-card__body">
+          매뉴얼을 들고 <strong>자기가 직접 일을 수행하는</strong> 아이입니다.<br><br>
+          · 여러 에이전트를 <strong>동시에</strong> 묶어서 돌릴 수 있습니다<br>
+          · 에이전트마다 <strong>권한이나 도구를 다르게</strong> 줄 수 있습니다
+        </div>
+      </div>
+    </div>
+    <div class="numbered-card__note" style="border-left-color:var(--black)">
+      <strong>자동 실행은 에이전트가 아니라 ‘훅(hook)’이 맡습니다</strong> — 에이전트가 스스로 조건을 보고 뜨지는 않습니다.
+      “이 일이 끝나면 저걸 해라”를 미리 걸어 두는 별도 장치가 훅입니다.
+    </div>
+  </div>
+  <span class="slide__page-num">15</span>
+</section>
+
+<!-- ── 06-3 하네스 ───────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">06 — MANAGE</div>
+  <h1 class="slide__title">하네스 엔지니어링</h1>
+  <p class="slide__lead">일 하나를 여러 조수에게 어떻게 나눠 주고, 어떤 순서로 이을까를 짜는 일입니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 288" role="img" aria-labelledby="dg-harness-title dg-harness-desc">
+        <title id="dg-harness-title">스킬 · 에이전트 · 하네스</title>
+        <desc id="dg-harness-desc">에이전트는 저마다 매뉴얼인 스킬을 품고 서로 다른 권한으로 일하며, 그 에이전트들을 순서로 엮어 둔 것이 하네스다.</desc>
+        <rect class="z" x="8" y="48" width="1104" height="208" rx="8"/>
+        <rect class="msk" x="28" y="40" width="152" height="16"/>
+        <text class="zl" x="36" y="52">하네스 — 엮는 방식</text>
+        <path class="c" d="M 512,156 H 608" marker-end="url(#dgA)"/>
+        <rect class="msk" x="528" y="132" width="64" height="16"/>
+        <text class="al" x="560" y="144" text-anchor="middle">넘깁니다</text>
+        <rect class="n" x="56" y="88" width="456" height="136" rx="6"/>
+        <text class="eb" x="80" y="116">AGENT · WRITE</text>
+        <text class="nm" x="80" y="140">에이전트 · 만드는 쪽</text>
+        <rect class="nf" x="88" y="156" width="392" height="48" rx="6"/>
+        <text class="nmw" x="108" y="176" style="font-size:12px">스킬 — 만드는 매뉴얼</text>
+        <text class="slw" x="108" y="196">적어 둔 대로 일합니다</text>
+        <rect class="n" x="608" y="88" width="456" height="136" rx="6"/>
+        <text class="eb" x="632" y="116">AGENT · READ ONLY</text>
+        <text class="nm" x="632" y="140">에이전트 · 검사하는 쪽</text>
+        <rect class="nf" x="640" y="156" width="392" height="48" rx="6"/>
+        <text class="nmw" x="660" y="176" style="font-size:12px">스킬 — 검사 매뉴얼</text>
+        <text class="slw" x="660" y="196">권한을 좁혀 둡니다</text>
+      </svg>
+      <figcaption class="figure__caption">스킬은 글, 에이전트는 그 글을 든 사람, 하네스는 사람들을 엮은 줄이다.</figcaption>
+    </figure>
+    <div class="callout" style="margin-top:var(--space-md)">
+      <div class="callout__title">잘 묶어 두면, 효율도 좋고 일도 잘합니다.</div>
+      <div class="callout__body">누가 무엇을 맡고, 어디서 넘기고, 어디서 확인받을지를 미리 정해 두는 것입니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">16</span>
+</section>
+
+<!-- ── 07-1 지금 하실 것 ──────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">07 — NEXT</div>
+  <h1 class="slide__title">그래서, 지금 하실 것</h1>
+  <p class="slide__lead">세 번이면 끝납니다.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 256" role="img" aria-labelledby="dg-next-title dg-next-desc">
+        <title id="dg-next-title">지금 하실 것</title>
+        <desc id="dg-next-desc">사람은 폴더를 두고 Claude에서 열어 도우미를 부르는 세 걸음만 하고, 점검과 설치는 도우미가 스스로 이어서 한다.</desc>
+        <rect class="z" x="0" y="32" width="832" height="192" rx="8"/>
+        <rect class="msk" x="20" y="24" width="112" height="16"/>
+        <text class="zl" x="28" y="36">사람이 하는 것</text>
+        <rect class="z" x="864" y="32" width="256" height="192" rx="8"/>
+        <rect class="msk" x="884" y="24" width="128" height="16"/>
+        <text class="zl" x="892" y="36">도우미가 하는 것</text>
+        <path class="c" d="M 264,128 H 304" marker-end="url(#dgA)"/>
+        <path class="c" d="M 536,128 H 576" marker-end="url(#dgA)"/>
+        <path class="ci" d="M 800,128 H 896" marker-end="url(#dgAI)"/>
+        <rect class="msk" x="812" y="104" width="72" height="16"/>
+        <text class="al" x="848" y="116" text-anchor="middle" style="fill:#1A1A1A">스스로</text>
+        <rect class="n" x="32" y="64" width="232" height="128" rx="6"/>
+        <text class="eb" x="56" y="96">01</text>
+        <text class="nm" x="56" y="124">폴더 통째로</text>
+        <text class="sl" x="56" y="148">꺼내지 않습니다</text>
+        <rect class="n" x="304" y="64" width="232" height="128" rx="6"/>
+        <text class="eb" x="328" y="96">02</text>
+        <text class="nm" x="328" y="124">Claude에서 열기</text>
+        <text class="sl" x="328" y="148">Code · 실행 위치 Local</text>
+        <rect class="nf" x="576" y="64" width="224" height="128" rx="6"/>
+        <text class="eb" x="600" y="96">03</text>
+        <text class="nmw mono" x="600" y="124" style="font-size:14px">/환경세팅-도우미</text>
+        <text class="slw" x="600" y="148">치면 됩니다</text>
+        <rect class="ns" x="896" y="64" width="192" height="128" rx="6"/>
+        <text class="eb" x="920" y="96">AUTO</text>
+        <text class="nm" x="920" y="124">재고, 깔기</text>
+        <text class="sl" x="920" y="148">물어보며 하나씩</text>
+      </svg>
+      <figcaption class="figure__caption">점검기도 도우미가 스스로 돌린다 — 사람이 터미널을 열 일은 없다.</figcaption>
+    </figure>
+  </div>
+  <span class="slide__page-num">17</span>
+</section>
+
+<!-- ── 07-2 3단계 상세 ───────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">07 — NEXT</div>
+  <h1 class="slide__title">세 단계</h1>
+  <div class="slide__body" style="margin-top:var(--space-sm)">
+    <div class="numbered-card">
+      <div class="numbered-card__num">01</div>
+      <div><div class="numbered-card__title">「환경세팅」 폴더를 통째로 두세요</div>
+        <div class="numbered-card__body">안의 파일을 따로 꺼내면 서로를 찾지 못합니다. 두는 자리는 상관없습니다 — 바탕화면이든 다운로드든.</div></div>
+    </div>
+    <div class="numbered-card">
+      <div class="numbered-card__num">02</div>
+      <div><div class="numbered-card__title">Claude 앱을 열고, 이 폴더를 고르세요</div>
+        <div class="numbered-card__body">왼쪽에서 <strong>Code</strong> · 실행 위치는 <strong>Local</strong> · 폴더는 <strong>「환경세팅」 폴더 전체</strong>.
+          Cloud를 고르면 내 컴퓨터를 못 재서 의미가 없습니다. 「이 폴더를 믿어도 되나」를 물으면 허용하셔야 진행됩니다.</div></div>
+    </div>
+    <div class="numbered-card">
+      <div class="numbered-card__num">03</div>
+      <div><div class="numbered-card__title">입력창에 <code>/환경세팅-도우미</code> 를 치세요</div>
+        <div class="numbered-card__body"><strong>재는 것부터 깔기까지 도우미가 이끕니다.</strong> 무엇을 붙일지 먼저 고르게 하고, 깔 때마다 묻습니다.
+          비밀번호가 필요한 설치와 창을 띄우는 로그인은 사람에게 넘깁니다.</div></div>
+    </div>
+    <div class="numbered-card__note" style="border-left-color:var(--gray-300);margin-top:var(--space-md)">
+      <strong>두 번째 길</strong> — 회사 방침상 명령 실행을 맡길 수 없거나 Code가 안 열리면
+      <code>맥/맥에서_두번누르기.command</code>(윈도우는 <code>윈도우\윈도우에서_두번누르기.bat</code>)를 두 번 누르십시오.
+      <strong>재기만 합니다</strong> — 아무것도 설치하지 않고, 설치 명령이 적힌 안내서만 나옵니다.
+    </div>
+  </div>
+  <span class="slide__page-num">18</span>
+</section>
+
+<!-- ── 07-3 주의 ─────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">07 — NEXT</div>
+  <h1 class="slide__title">두 가지만 지켜 주십시오</h1>
+  <div class="slide__body" style="display:flex;flex-direction:column;justify-content:center;gap:var(--space-md)">
+    <div class="callout">
+      <div class="callout__title">비밀번호 · 인증번호 · 복구 코드는 Claude에게 알려 주지 마십시오.</div>
+      <div class="callout__body">묻지도 않습니다. 비밀번호가 필요한 설치와 창을 띄우는 로그인은 사람이 직접 합니다.</div>
+    </div>
+    <div class="callout">
+      <div class="callout__title">막히면 다음 단계로 넘어가지 말고, 그 자리에서 물어보십시오.</div>
+      <div class="callout__body">그림으로 된 자세한 안내는 같은 폴더의 「이렇게_시작하세요.html」에 있습니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">19</span>
+</section>
+
+<!-- ── 막혔을 때 ─────────────────────────────────── -->
+<section class="slide">
+  <div class="slide__section-label">WHEN STUCK</div>
+  <h1 class="slide__title">그럼에도, 막혔다면</h1>
+  <p class="slide__lead">가이드에 없는 오류가 나면 — 설명하려 애쓰지 마시고, 화면을 그대로 보여 주십시오.</p>
+  <div class="slide__body">
+    <figure class="figure">
+      <svg class="dg" viewBox="0 0 1120 200" role="img" aria-labelledby="dg-stuck-title dg-stuck-desc">
+        <title id="dg-stuck-title">막혔을 때 화면 보내기</title>
+        <desc id="dg-stuck-desc">shift·control·command·4를 함께 눌러 막힌 화면을 복사한 뒤 Claude Code 창에 그대로 붙여넣는다.</desc>
+        <path class="ci" d="M 760,76 H 824" marker-end="url(#dgAI)"/>
+        <rect class="n" x="8" y="32" width="152" height="88" rx="6"/>
+        <text class="nmx" x="84" y="76" text-anchor="middle">&#8679;</text>
+        <text class="sl" x="84" y="100" text-anchor="middle">shift</text>
+        <text class="al" x="176" y="80" text-anchor="middle">+</text>
+        <rect class="n" x="192" y="32" width="184" height="88" rx="6"/>
+        <text class="nmx" x="284" y="76" text-anchor="middle">&#8963;</text>
+        <text class="sl" x="284" y="100" text-anchor="middle">control</text>
+        <text class="al" x="392" y="80" text-anchor="middle">+</text>
+        <rect class="n" x="408" y="32" width="200" height="88" rx="6"/>
+        <text class="nmx" x="508" y="76" text-anchor="middle">&#8984;</text>
+        <text class="sl" x="508" y="100" text-anchor="middle">command</text>
+        <text class="al" x="624" y="80" text-anchor="middle">+</text>
+        <rect class="n" x="640" y="32" width="112" height="88" rx="6"/>
+        <text class="nmx" x="696" y="76" text-anchor="middle">4</text>
+        <text class="sl" x="696" y="100" text-anchor="middle">숫자 4</text>
+        <rect class="nf" x="832" y="32" width="280" height="88" rx="6"/>
+        <text class="nmw" x="856" y="72">Claude Code 창에</text>
+        <text class="nmw" x="856" y="96">그대로 붙여넣기</text>
+        <text class="sl" x="8" y="164">커서가 십자로 바뀌면, 오류 난 자리나 멈춘 화면을 드래그해 감쌉니다</text>
+        <text class="sl" x="1112" y="164" text-anchor="end">붙여넣기는 &#8984; + V</text>
+      </svg>
+      <figcaption class="figure__caption">control을 함께 누르는 것이 핵심이다 — 파일로 저장되지 않고 복사만 된다.</figcaption>
+    </figure>
+    <div class="callout" style="margin-top:var(--space-sm)">
+      <div class="callout__title">말로 옮기기 어려운 오류일수록, 보여 주는 쪽이 빠릅니다.</div>
+      <div class="callout__body">오류 문구뿐 아니라 <strong style="color:var(--white)">진행이 멈춘 화면</strong>도 그대로 붙여넣어 주십시오. 무엇을 하려다 멈췄는지 한 줄만 함께 적어 주시면 더 좋습니다.</div>
+    </div>
+  </div>
+  <span class="slide__page-num">20</span>
+</section>
+
+<!-- ── 클로징 ────────────────────────────────────── -->
+<section class="slide slide--closing">
+  <img class="closing__wordmark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABkAAAAF2CAYAAAA2iFSZAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAkcNJREFUeAHt3Qd8lFW++P+TTHqjt9B7CSUQQMGGa1twUdQFC4oilm267v68d3fv/f3vzv5+e7d6111dC6wUUUSJUkRFQTQqJQFSSCMhCZAAISSE9DaZyfzPmT3Dj921UFJmzvN5v17xOfNE791nMvM853u+53yPcLvdJ+VPi9si2tra8v/yl79cLeDXioqK7pR/zkq3oVwulzrs3rlz50iBi7Z27dpI+f697jZbXVlZ2T0Cfs9utwe2trb+2m2uPz322GPBAj7t3nvvndzY2JjiNluh/L7dLHBR5HsW1dLSssFtLXXLly9/XMBvbdiwoaf8O77rNpjT6VSHhtOnT/9AXnKAwAUrLS1dIN+7KrfZdrzyyitDBQB0gj/+8Y//xw34sED5OU2TPw3CIgICAmK/+93vDhHwWwkJCcEyEB8vmxHCUIGBgUIOiB7Ny8s7LQDAv90we/bsmQKAX8rJyWnavXt3nmy6hHVEjR07dsycOXOCBPxSWVnZKHkYJAxms9nUoXrPnj358ugWAAAA+FIqAbJV/lS3tbUJ08mEjzpE9e/ff9ry5cuZjeqnpk6d2lP+Da+VzTBhrsaPP/445Yc//GG9AAD/Nvnuu+/+wRNPPBGjXzNLFfAjiYmJrurq6iTZLLZCvOB13XXXTZP3LqMH0E02efLkK+RhvDDc8ePHM//yl7/k6Jc8XwEAAL5E4Pbt21NlUHNSzTg3XUDA3/uEDodj6meffTZMwC/JQbThPXr0GKsTWsbRgwvFISEhyQIA/Jj3Ph0WFnbbnDlzbveeFgzSAH4lLy/vYF1dXb4V4gVF37vG2Wy2qQJ+Z8OGDSEygTVRmD1ZSnG6XK7kMWPGVOrXrAIBAAD4EoEvv/zysfLy8kxhIXJgefLcuXPZW8E/BQQHByfIYx9TEyBqcKG2trbgwIEDhwUA+DHvxAMp6o477nhEDkoN168ZpAH8SHp6enWqJJttpva/zqfvXf2mT58+Ve3TJOBXzpw5o541Rq/+0N/Dmm7duu1bsWJFqwAAAMBXCty0aVOlHHBVAY3DCgGNukZ5vT0WLlxo/JJoE02ePDmioaFB1ZKPMHgWYmtycnLaz3/+c8pfATCGHFCcLZMg9543mMgqEMBPqDJYbW1te2SzVJ+yQhIzYOrUqZN69+7dQ8CvyATIFHmIEwZTSTqn01kgv5veCVM8UwEAAL6CZxBi48aNuS6X68x5MzWNpa/RJjuM0+RATC8BvyITV/0nTJgwURhKl786HR0drcpfWWmzUQDmC5IekvfwK/RrSmEBfuStt97KkAPLhbovbZXvblxLS8tkAb9y1113qeRHT2EoHS+46+vrk997771T+jQrKwEAAL6CJwGyefPm47W1tRnCQtxud0JISMhQ/ZIBGD9x0003xUdERAwydbWSHlQ4Jn+yBQAYRA/YjL711lsfmj9/foQA4FdSU1PPZGdnH5BN6+yELsTw2267bYqA3/jNb37Tx+TJUopeBd/kdDr3b926tVEAAADga3l6T4MGDSoLDw/fJzzjE9aIaaKiogY/+uijY/RLZsz4gYSEhGCZIJghm71NXa2krqukpCR9xYoV3s0MSc4BMIK3bKFMYt/1/e9/f54+zSoQwE/IBEhr3759d8nmGavEC1LQqFGjJm7YsCFcwC+43W6V/DB+1U5ra+sxGS/k6Zc8RwEAAL6GZzRC1fWtqalRK0DqDN5X4RwdtEXMnDkzfs6cOWECfkEOmEVPmzZtqtCfW9Poz2VVXV3d3jVr1jTr0yTnAJjCre9zvebOnfvw559/PsB7XgDwC+Xl5Qfl4agV4gUvOaA+5Ysvvhgn4Bceeughtc/jUGGo85KP+/bs2XNUt3mOAgAAfA0VvXhmjLz88ssFra2th4QF6KAtUHYgZ44cObKfPs3MGR83bty4CUFBQcO9dW+FYfTn8uSpU6csVY4OgGUEqPucvoffEBcXx4bogP/wfEdffPHF0ydOnNgvLFQGKyAgYPywYcOM3lDbFH/605/CY2Nj1QqQYFPL5ep4wVFaWnrg/fffrxIAAAD4RqoH5e0dHpEdfFUGS1hlWXu3bt3GP/7448P0S2bO+LaAkydPqvJXg3XH38jBspKSkoNr1qw5KQDAUPoeHtKzZ88Hp0yZ4i1TQikswLd5+smJiYlNcmBZlcGqtVAZrMilS5dOkgnbIAGflpqaOsrpdKrV4sLUcrmKvMbyv/71rzn6Jc9OAACAb3Bu/brs1DcXFRWpZe0OC5XB6jl69OjJ581AhY+aNWtW2IgRI+Jl08iSZfrz2CiDtb3r1q2rEwBgLm8prElXX331g3Pnzg0VAPxGRkaGihdKrBAveFcR9OjRY2plZaWxZZVMccUVV4y12WwThOFaW1vTiouLC/RLJvEBAAB8g3+IXF555ZVDclCiSFiAdwZqeXn5zHfeeaebPs0MGh/1yCOPDJk+ffpYYSj9eTyTnJycJghkAJgtwLuSr3fv3vf85je/uVGfZxUI4Ns8308ZL6hynWrVuPH9Fe8qAhkfTZ04cSL7gPgwNaHtwQcfnCj/ZtHCUDoh5w4NDT2QmJjIinEAAIAL9A8JkKCgoDw5KJGq2qbWTf1nsbGxU+bOndtfv2Tg2UeFh4dPk4cRwmAnT57MefHFF72bGTIICMBk3lUg/ePj4x9+9913e3vPCwC+yvP9lN/XOhkzqDJYTVYpgyXjo56LFy+eKOCzCgoKYiMjI1X5qwBTP5c6IVeTnp6eJQAAAHDB/iEB8rvf/a7qwIEDmbLZZnLdVC+V5ImKihr4wAMPjBfwWWpG1+TJk1X5qz7CQDrZ6LTZbMljxoyp9J4WAGAutQrEre9/c6dNm7bw/N8JAD5NJkEy5ff3uIXKYAUGBwdPe+SRR/oJ+BrPM+Omm24aIT+PasKUMPlzKT+PB1977bVDAgAAABfsX3qH69evz5EdqzJhATqg6RYSEjIzLi4uRMAnDR8+vIf8+5hez7dWLWdfsWJFqwAAawhQky3kszh84MCBD7755ptj9HkSwIDv8gw2b9q06VhdXZ0qg2X8qnHvpDAZL0y/+eabjV6N7Kc8H8B77rlnvPxb9TX98yivL72pqemIAAAAwAX7lwRITExMtuw8ZgoL0LODbEOHDk340Y9+1F3AJzkcjinyYOz+Hyqwbm1tLXzttde8mxky+xmAZejBxRnXXnvtQ3a7PUgA8GWe0eX333+/SvbP9simQ1iAHlQftGDBAuM32PZHixcvjpF96QTZDDG8ikHTxx9/nMWEKQAAgIvzZeuDT7S1tR0UFqFqxIaGho688cYbRwr4pFtuuUWVvxouDKRrFLtbWlr2yoDGu5khs58BWIocXAwcMGDA4qFDh14tAPiFtWvXZrpcrlNWKJurrzGkqalp+m233WbsJtt+yPOHaW5uHiw/izOE+fI+//xzS0xUBAAAaE//kgCx2+1t7733XrZs1goL0KtA+p46dWq6+PKEELrQhg0bwgcPHhwnm0bOCtafv6bGxsYDW7dubRQAYEF6cHGITHg/8stf/jJGAPBlni/srl27CuWgc4pqm1526Dwzg4ODh+g2K3a7nueD98gjj4zp1q2b8eXJWltbM7t3787+HwAAABfpSwf8jx07liEPucI6IqOjoxMmT54cLuBTsrKyRsmD0ZvUy2Cm5K9//Wu+fkkwDcCS1ADqgAEDbnvqqaduFwB8mWfQedOmTeVVVVXJsum0wioQJSYmZpS8R7FfkQ9ZuHBhyNVXXz1VNiP1ympTObdu3Zr1b//2bw0CAAAAF+VLEyAyiCmQg7I5wkKmTJky4Wc/+1k/AZ8iB8MmyUOcMNB5QdqBvLy8It0mmAZgZdHdu3d/+KWXXhomAPi8F198UZXBKhcWoPttkZMnT05Qg+4CXe3vdclCQvrKz+AVsmnTK6tNVZyVlWWZMtUAAADt6Ut7iU8++WTLu+++q+qLWmJjQxXQyKTPYDnYHi/gM9xud8ADDzygNps0shyKDtKcx48fP5CYmHhWAICFnTeD/Oo77rjjPrvd7u2jsDIO8FHl5eV58nBAtQ2ffe/tt9lk//TKPn36eCdNcX/qOp5JQ0899dTQbt26GTlZykuXmMueNm1ahgAAAMBF+8ppMjU1NWnyUGiFmr7efUBkMDN94cKFNgGf8Ktf/WpAVFTUJGEwl8tV8dJLL3lXWxFEA7A03ecI6tev3wPdu3f3bmjLyjjAR7388sulx44d2yebbYbPvj9HDbY/8sgj3v0muD91sZEjR06Rh54mJ+DUBIH6+vrs+fPnVwoAAABctK+MVAoKCnLq6uryrVLTVwqcOHHipAULFrD5qo8YO3as2vtjijCYTICkl5aWFuiXBNEALO28Pse4hx9+eOnq1avDvL8SAHyRe/ny5Qfl4LMlVrLqQfae/fv3TzhvlRo6n+eZkJCQ0K2srGyWbIYbnoAre++99zLkM5JYAQAA4BJ8ZU/xd7/7Xc22bduyZdPs9eyaDmhG9u3bd6yAT7jrrrtUAmSgMJB3ZVVQUFDqunXrjgsAgIf3/hgdHX3X/Pnz53pPC5IggE9qbW3Nlt/bNGEBepA9JCIiYnZNTU13fZp7U+fzPChmzZo1YNCgQUZPltLPxMMhISH7BQAAAC7J102VURkB1dEqtVAZrCGnTp1KEOhydrs9ymazTZbNIGEgPcu5dt++fdmybYkkIwBcCDXDVU9K6N2zZ89Hn3322QECgM+aPXv2cdlnOyAsQsVF3bp1m/i9731vsPeUQJeQf4M4mSwfaHKsqmKG8vLynDfffPOUAAAAwCX52rXCvXv3VrO5iixUBivy2muvnfLYY48FC3SpY8eOjXI6ndOEwWSwlvPOO+/kCgDA+QLUpAQ1oCX7Hzfcfffdi8TfZ1izCgTwQYsWLXLt3r37oGxWCwvQg+0DZKJ2qkCXmTt3bqg8XCF/upmaANHXVbt37960xMREhwAAAMAl+doEyMsvv1xRXFxsmQFa1ckcOnTo2Ouvv97Iskv+ZPHixWNCQkKMLkcmA+eMqKioQgEA+Coh/fv3Xyr7I5P1a5IggA/6/PPPM+ThoLAAvWo8prm5eVZCQkKEQJe4+uqru48cOVKt3LcZvv/HUfmTIgAAAHDJvra3qGaaFBYWqg5XtRXKYOmVLmrlQbxAl9mwYYPt2muvnSibkQZ/7lq2b9+eZbfbmwUA4F94S2HJ45THH3/8IflsCBEAfJLD4TiiJnYIC4mLi4u///77+wp0iTvuuGNsWFjYCF0y0UgqNi0qKsrbtWvXEQEAAIBL9o3TZRobG1VN3xILlcHqP2/evHg58M4M0y7y2WefDZLvv5rRFWDw564oLS0tSwAAvornGaAHt+6eOXPmjfo8q0AAH2O3250ff/xxumzWC/N5krPBwcFDr7766skCXSHg9OnTM+Sxn+GrP5ozMzNTn3nmmSYBAACAS/aNPcbXXnutuKCgwEplsAJ79uw5ftu2bdECnc0zoLVs2bJhoaGhRq/CcTgc2UFBQSRAAOBrqFUgenBrwJAhQ5bJQaDe+ldsOgz4mLy8vFR5yBbmC9D3pd42m+3KOXPmBAl0qri4uEhpumyGC0Pp5H/p0KFDk9VLAQAAgEv2jQmQxMTExpKSkv2yaYmZJ3rFwbgDBw7ECXQ2z4DWxIkTJ8hDb4OXtLvffffdrJ///Oc1AgDwdTybn+tSWHNvu+22O//pdwB8xIABAw63tLTkCOuwTZ48OeGxxx7rLtCpnnrqqcHTp083eq9AnWQrPHny5CEBAACAy3Iha4bbBg8evE8ey0yusfpPRksTBTrdggULutfW1qoZXSEGL2k/mZ+fb4mNQgGgHXhnW4ePGjXq4S1btngHvVgFAviQRYsWObZt26ZWgTQK83kSszabbaQ0XqBTDR8+fJpMig82PDZ1Zmdnp7733ntMmAIAALhMFzTCnJOTc9jtdhcaXmP1fOF33HFHnN1uZ0l7J5ODW4PCw8OnC0PpTd0PDRs2LF0AAC6UdxXIjNtuu+0Bns+Ab2publbleg7r/o7JvInZgcXFxVeKC4ypcPnU/b9Xr14qVuhtaGzq1omdSvmzZ8WKFa0CAAAAl+WCeo3//d//XVVUVKTKYLmERYSGhsbJnyECner73//+2IiIiGHCUKrEWm1tbU5hYWGZAABcKM9go9qnS7bvv+uuu64WAHxOvlRfX5+rS8paQdi4ceOmzp8/P0ygU0yYMKFHfHy8ySv1Pc87l8t1LDMzk/0CAQAA2sEFJUBSU1NbQ0JC9spmlVXKYMlBlokVFRUTBDrNnDlzwrp16zZNNiMN/pxVv//++xl2u90pAAAXRQ+qDp04ceLSlStXRgsAPkX2b5qSkpJUGawWC6wC8Zg0adLYe++9d5RAp5DJgSnyMEIYyvu9OXr0aNqf/vSnCn2aPa8AAAAuwwWvG/7www8Ptba2FlulDJYcZOl78803kwDpHJ5O/dy5c3tHRkZeIZs2Ez9nOqApDAoK2i8AAJfjjoSEhNsFAF8juzvuPfJ41AqrQHTfbqTNZjO2fKuPCYiLi1Pvtemr9GvlZ2pPamqqdz8d9rwCAAC4DBc8yrx+/frT5eXlauDWbZFVIIE33XST2geku0BH83TqH3jggWFhYWHjTJ0xqAYCTpw4kffxxx8fEwCAyxE9ZcqUh3/9618PFgB8yu7duw/JmCFPWIBO8nSbPn36NPYm6nhr166NGDdunCp/Zex7rT5TLS0tpZs3bz4oAAAA0C4uOAGSlJRU73K51MaGjVap6yuvc0pVVdVogc4Q2NjYOFUeewpzNe/ZsydtxYoVTQIAcLmuufXWW++Xg47evgwlQgAf8Pvf/74uJydHTZpqtUIZLHWNI0aMmCB/YgU6VF1dnYrLxgnDnThxIn3jxo0n9EuebQAAAJfpouoMvfLKK9nNzc1lFkqAjFm8ePEYgY7k+TDdeOON0U6nU5W/Cjfx86UHAEr69OmzT7CMHQDaQ1B8fPyDCxcu9Jae4d4K+IY22afbLY8nrBAz6Gsc53K5pgl0qJCQEDVZytjYTFdZaI6Jidm7a9euan2aZxsAAMBlutAEiKdnn5SUVFJZWZkuLEB3QMMSEhImsqS9Q3k69ffee2//MWPGTBKG0sFxYXBwcK4AAFw2/ZweO27cuKV/+tOfwvVpZsoCPmD16tU5x48fPyyso/9tt90W73a7uQd1kA0bNtgWLFigYoVoYSi9B+LZpqYmFW+T+AAAAGgnF5oA8XTAbrjhhsru3bvvlU2n6fuA6A5ogMPhmJqZmWn6Rntd7qqrrpokkwQDDf5cOQ8dOpS+c+fOOgEAuGz6Oa2OC6+77rq5+rTqrzAACXSxU6dOVR85ckStenUKC1CJj549e05cuXJlD4EOUVZWNqB3797jheEaGxszX3jhhWP6Jc8zAACAdnBRJbDsdntbcXGx2pDtrHfgwXRBQUFTRkgCHWbu3LmhMvlxpWz2MPBz5dZJnfK6urpk+R2yxEAAAHQGfX/tpTZE/4//+I9+AoBPSEpKcg4dOlSVwSo3fdKUolf6TpJxkrGrmbtadHT0ZHmIE4bS3xOX/NlbXV19Wp9mFQgAAEA7uJjRZk/P/qWXXjrS1NSUJSxCJkB6/+hHPzJ+s72u9L3vfa/7mDFjVN1kE7NqASqp43K5SmRQnCkAAO3GmzS32Ww3LVu27B7x974Kq0AAH5AtyUOhVSZNSSNGjhw5RaBD3H333RPlYaAwlP6e1BUWFqavWLGiVQAAAKDdXExE4pmB4nA4TsiBhmThmahi9owufX1B/fr1m3brrbeypL2DDB48WCWYhpv8ecrPz8949tlnKwQAoD15V9mFjBgx4sFDhw5N9J4XALrU2rVrK4qLi1PE32e1W0GQGqS32+1hAu1q5cqV0eHh4er+bnQ2rampKU/GCwX6JYl8AACAdnLRnUg1IyU1NVWVwWo0fUbXeTNLE2bMmDFYoCMElpWVTZfHfiZ+nvTAXE1AQMBeqUkAANqTWmXnTYLEjxw58iE5+Bji/Z0A0GUSExMd8vu5SzarrFAGSwkLC5siB7HHCrQrGXuOk58hY8uLud1/z9nL70tyQ0NDsfe0AAAAQLu42BFnz2DCq6++etjhcBwWFhEcHDz8scceGy3Q7p5++unw8ePHqwRIuDCQSuo4nc6TO3fuTBcAgI7gKTWoNiGWz+t75s2b9y19nlJYQBf74osvsuV384iFymBNmD59+kSBdnXDDTfEyc/QGGEovYdMU3JycppMHDJhCgAAoJ1dbDTimYlis9mKZEftgOeE2+zJKXrGWkR0dPQUmQQJFmhXN9100+Bhw4aNMflzVFBQkL1y5crjAgDQUdz6ORI7ZcqUZb/4xS96ec8LAF3BM6L75ptvlkme0rnCGqLuvPPOiRs2bLAJtAsVf33nO99Rm59HCIO1tLQcXbNmTZ5+SfIeAACgHV3SdKwXX3yxfseOHWpGu1PPWDGWnrFmq6+vn3n48OF++jSd0nbicrkS5GGIMJBOnjWHhoYmZ2Rk1AoAQEfxrAJR992QkJB5MgFy5/m/EwA6myf5uHXr1kaZnNwjmw2mT5rykrHR1M8//9zIvm1XkP3oITabLV4YTj7D9suDd/8PkvcAAADt6JLXo2/cuDFXDl6XCIvo27dv3JIlS7zBDJ3SdmC324MSJNnsbWIiTV9TZXBwsFotZZWZjwDQZfR9V63aXJqSkuItl8IzG+gani/kW2+9ld3a2nrU9ElTXioBctddd7EPSDtZsGDBGJkAmSLM5pIJ/Iw1a9ZUCwAAALS7S06ADB48OE92RtNU2wplsAIDA3vdeuutavM9ZpK2k29961s9VGLJ1M+PCvQbGxsPLV++/Ij3lAAAdBh53/WWwroiPj7+AcrQAF3K82V85513Spqbm/eq16Zvhq6vr9e1117LPiDtZM6cORPkoZfh8Wbpli1bsgUAAAA6xCUnQOx2e4UMZg7KZptFymCFt7a2XrF48eJogXZRUFCgZnONNPHzowNgV1NTU3JaWtoZfZpZyADQsQLUM0XegwNDQkIW9+7d++rzfycAdLrdu3fX1dbWqn1AWkzfDN1bOlf2/6bfcccdfQUuy7333tvb4XBMk81Aw+PN9EOHDuUKAAAAdIjLiULcb775ppqpUiksYuDAgVMeeOABgpl20qNHD1X+aqgwkA6A60+fPn1g27ZtLQIA0Gn0PXj4rFmzlv37v/+7d+ICSWigi7z00kvZciC7WFhEcHBwQv/+/UcIXCpPtqNbt24jZOJjmjBcY2Njht1uPyUAAADQIS5rGlZxcXGmPKhVIJYogyUNmTRp0niByyY7+RFz585V5QGChKEaGhoKX3jhhcP6JTOPAaATqX5JWFjYbTfddNN8AaBLnTx5slAeVBksYXoZLCUkJGTwj370o3ECl8oTWD711FOj1SbowmxV69evV5MKSdIDAAB0kMtdh15SW1vrqVdqkTJY3U+dOjUjISEhWOCy9OzZc7QcmBprYuLMG9jLz0xKRUXFcX2aoAYAOpHul3S77rrrlq1atWqwANBl1ObOJSUl+2TTaXoZLN0PDBk+fPj0hQsXRglckoceeihs2LBh8bIZbnjSLFPGl5kCAAD4KsbzDHBZs+/tdrszNjY269FHH22ULyOE+YL69es3XSZAuqWmpp4RuGRDhw5VAc1YExNnOrBvzs7OPpCYmFgvAABdQiXZg4ODr33wwQfvk4Ovf5T9FvOnngM+6sUXX8z+4x//eNxmsw0XBtP9wAB5vFImQVTy9ZD4+0pggucL43mvevToMUgmPq4Uf38vhamqqqoyjx8/fkQAAABfFaAmY8j+SIVsqx8VU3ZG56S9+46dOQDrc/3eyy4/VFFRkSEPefLH+PqsyqBBg0bfd999w1esWEEC5BLJAajAefPmqfJXMcJQTU1NJ2Wgf0i/JOgFgC6gk+xBsrP6UEJCwqeyvU8A6BLV1dV5MvmRIpvDdRApTBYaGjry+9///pg//OEPqj9IP/DCed6rJ554YkR4eLjpZcSa1q1bly3jylYBAAB8luy3trW2tr6fk5Pzt2PHjjVGRESEulwuSt37kctOgPTu3VslP3KEBRIgOljrFxkZqa71gCCYuSQxMTEDgoKCjN5LRQb4+2tqaryzuficAEDXGnfTTTc9+NBDD2WuWbOmWZCYBjrd6tWrK2RCIHXGjBkLZX/aJgymY4bo7t27Jzz22GMfMMB9cdRkqZ49e06RzRjDk2V5cjAlTQAAAJ8nn9lHp06dqva0I470Q5fdm3z88ccbi4uLs2TTKQynO9/Rw4YNmy475qECl+TMmTNq9cdEYa42+VlJ3bRpU7kAAPiE0NDQRXfeeee39UvVaWXGDtDJXnvttUyXy1UmDKdjBlt4ePjscePG9dWnued8M897tHPnzl719fUzZTPE8JVCh+Li4g4JAADg89ra2oI2bNhg9hJmg7XLHy4pKUnNXDkmLEDVE+/du3fcd77znb4Cl0S+d5PkweQNaSu3bduWIwAAPkE9u6Xe8+fPX/bRRx/x/Aa6iEwIZNtstgPCAtR9RyZex99zzz0jvacEvonnPZLJ6sF9+/aNF2ZzFhYWZt5yyy0NAgAA+DzZt7N9/PHHJED8VLv84WJiYtQ+IIeFdQwpLy+fInDR7HZ71KxZs+JE52wY1CVcLle6TIDkCwCAT1B7gegkyM3XXXfd3fo0q0CATvb73//+VFtbm5o41SasoVdLS8s0VdJJ4IItXLgwLjg4uL++bxtHX1dxSkqKJZKBAAAAXa1dOuPr16+vzsnJUWWwjJ/ZpDdU7W+z2RJk59zo+sUdQSYHxsrDZGEwVcu3X79+JQIA4DP08zskNDR06ebNmyfp08zIBjqR/B66t23bpiZOnRGG0/ecUKfTOevjjz/u5j0t8FU8783kyZMj5Xt2hWxG6vfQOPq6DgcGBh4UAAAA6HDtkgBJTEx05efnqxksp02dqfNPbFdfffWUa665JlLgotxzzz1q8/Nxwlz1b7/9drbdbjd+TxwA8DdqM11pys033/zAY489FqxPMyAJdKLs7GyVALHMxs8jR46c/L3vfW+QfknS9at53ptf/vKXvYcMGZIgDL83p6WlZR0+fPisAAAAQIdrt+XYLpcrVR6OmjpT53xqACUiImLE4MGDRwtcMJkUCJogyWaEqYky+T04tHv37lwBAPA5ejPdwPDw8MWLFi26QZ+mFBbQiUaMGHHS4XBkCvO5VcwgY6MBM2bMmCpwQeR7NU6+Z8N1wto4+rrKTp48uU/GRlYpBQcAANCl2i0Bsnr16tLU1FRLbPysB1CGR0dHJwhcsJycnMEtLS2eANDURJnNZjs4depU9v8AAN/k1oNPsTfccMPSzMzMHgJAp5LJR9e7776bLpuVwmwBOmaIkf3eWQsXLgwX+Fpz5swJKi0tnSmb3fV7Zxx1XW63+0hlZWWqAAAAQKdot57ltm3bHCdOnFBlsGqFNURff/31k5cvXx4scEEmT548Ojg4OF6Yq7W6ujrr8ccfbxQAAF/kGZDUSZB5AwcOvEufZxUI0Ilqa2v3yYMlJk5JAaNHj45/7LHH+gh8rdDQ0JjevXtPV01hsAMHDmS/+uqrZQIAAACdoj2n1rhl514FMydMXbJ8PlXCSQ6ijJed9H4CF+T73//+OPme9RbmOvbGG29kCQCAT9Mzi6N69uz50JYtW0bp09TmBzrJ8ePHS+rr663QZ/KuOhsm7zdTBL7WT37yk2EjR44cK8xWW1FRsT8pKalZAAAAoFO069ri9PT0IqfTmW/qkuXz6RJOo44dO2byioZ2c9999/WIiYlR5a+CDE6QZYWGhh4UAABf5x2UnDV79uwlGzZssOnzrAIBOoHdbndu27ZNrRyvEWbzlsHqIwe9r5THIIGv1K1bN1VeeICpewXq507J4MGDUwQAAAA6TbtmKrZs2dKQkZGhghmHqR3XfzJIDpyo2VwMmHw1z3szY8aM4TJppGr6ClMTZCdOnMh+5JFHzgoAgK/zDkoG9u7de7F8Ps3W5ymFBXQSORisBoHzLRIz2MaOHTttyZIl3QS+lEyKhcXGxqpYIcbUvQLVc6epqSkvKSmpWAAAAKDTtOtIdGJioiskJCRZNsuFNQReeeWVEz766KMIga/iiWplYmB0UFDQUGGuU++9916GAAD4DT0bd8S111677Ac/+EGUPk0pLKATlJeXH6moqMgxdbD7nw0bNmzkPffcM07gS9144419hwwZMsHUhJi+rua8vLzkJ598sl4AAACg07T7VHw5CHyorq7uiFWCGWlcTk7OeIGvNGfOnDDZ6Vflr8INnuWXFxMTkyYAAH4jMDDQrZ5Lffv2veO//uu/5p/3K1aBAB1MDgK3pKSkqP0D601fBaKvb7A8XiE6IP4ygYwfVVnhYcJsp+VzR618Mn/DTAAAAB/S7h3w1atXnz116tR+4ZlYaYm+3ZiWlpaJAl/GM4AUFhbW3+FwqCXtgaYmxg4dOpT72WeflQoAgD8J0AOTMf369Xv4nXfeGaTPswoE6Bx75c9R0ydO6esLmz59+jS73R4i8M8CZawwQx77m/pZUNdVW1tbsHnz5sMCAAAAnardEyCFhYUtzc3NqgxWjUVWgUTdfffdExYuXGgT+GeeAaRHH310eK9evSYIc9V98cUXGStWrGgVAAC/ct6+VHOuuuqq++XgJLOzgU6ydu3aoqNHj+YKC9CrzcZNmzZtpMA/+N3vfhd97bXXThaGro7RkwJbKysrk3NycqoFAAAAOlWHdDJffvnlrJqamuNWKYM1fPjwiVOmTIkV+DIB3/rWt1RA093EFUF65nBhbGzsfgEA8Fvyfh7Ur1+/B0aMGDFNAOgUiYmJjSdOnFATp5pML4Ol46KRLpdrhsA/GDVq1Lju3buPMLV6gE601zQ0NCTLz7xDAAAAoFO1dwLE07Pft29f2enTp620H8KkkJCQOIHzeT4L9913X/fW1tYrZTP0vFm2xtDBbL78+xcKAIDf0vfzCbfccsvDdrs9zHtaAOhIbWfPnlVlsKwycar7TTfdNFXeY4IEzgkNDZ0uDyNMjBW8ampqjjz//PN5AgAAAJ2uvXuZnqlbqamptf369VPBTJNF9gEZsGTJEjZC/0fe8lcD+/TpM0WYy7Fnz54MOWDWKAAAfk2XqPnuT3/605u9pwSADvW3v/3tsHRIWIC6x0RGRk6Ij48fIOCxYcOGEJkUUrFChDCXu7Kycn9ycnKZAAAAQKfrqGk27uzs7Ex5LDd5Jo+il+vbZMIn7oUXXogS+AcTJXmINTAR5tbXdKKxsTFFMEgGAKboEx0d/cjatWv76tesAgE60Pvvv19bVlamymAZXxpIr3IZn5+fP1XAIzg4eHBoaOg4U0ug6XihoXfv3smZmZkNAgAAAJ2uI7ITnp79K6+8cqy2tvagMJx3uX5ra2v83r17xwicM2vWrPCTJ0/OlM1oAxNhAeqaXC5X4ZEjR7IFAMDvnVeC5+Zvf/vbC3VbjcqRBAE6jmvw4MF75LHMKivH4+Li4gX3FY/Dhw+rZNAYU0ug6RjoZEZGRo4AAABAl+iIUWnP9J2GhoYK2ZFVs7mcVghmgoODx1511VUkQM4jg7teMqBNEB230qirtaWlpaWvWLGiRgAAjKBnIYf26dNn6V/+8peJ3tMCQEfwjHonJyfny+9enukrx7XAefPmTfztb3/bXSAgISFhsjz2EwarqalJ/fOf/1yiX5L4AgAA6GQdFmUkJia6kpKSMmSzxiLBTORDDz003m63W+JiL8QjjzwyumfPniNMXNKuk3pn5LWlpKamtgoAgBHOm4U87dFHH12yfPnyYO+vBID25ukkrlixovLo0aNq/0CnsAB5n5ko+5AThcW9+OKL3W+44YY4YSgdLzjUpMBNmzZV6tMk1AEAADpZRw3We8tgFdTV1eUKw+kB/oDg4OCpeXl5AwUUW0RExAx57G1iAkQl9Zqamoo/+eQT48u8AYDV6EGrgPDw8Hu/+93vztGnKYUFdJCkpCRnUFDQbtk8a5EyWKNmzZo1RVhcbW3tJHmYIAylJwFWbt++PUsAAACgy3TYJujqHz179jwhO377ZLPN1I3tFO9sUZvNNvXOO+8cISB++ctfRg4bNkwlQMJMXQGUlZWV+fbbb5cJAIBR5HPLrQdhB3Xr1u2RdevW9RAAOoqnI/3ee+/ltba25ltk5XjwnDlzJj733HOhwsJuuOEGlQAxMnbyxr4tLS3p77zzTpEAAABAl+nQCGPNmjXN8pAuf1qE4XQnt99dd901VkDcfvvtg6Kjo8cZXP6qTl7f3tTU1EYBADBNgBqEVfd7m802Tw5U3qHPswoEaH+ezmJSUtLp2traXbLpssgqkCllZWWWjRtWr14dNn36dFUGLEQYSE+Qa3O5XCnjxo07KQAAANBlOjIB4un1rV+/Pk8Ogh85r6a2kfT1BdfV1SUsXrw4RljcmTNn1ObnsSb+3fU1lTkcjjQBADCWnokeNWDAgGUvv/zyaH2aJAjQARITEx0tLS3JsllnkVUgE7/73e8au//FN8nMzBwpY8RJwmDy+ureeOONg3a73RIZPQAAAF/VkdGFZzbX7t27i9ra2vZ7ThhcBsvLZrMlyIHxQfqlJQdI4uLiQsLCwmbKZk9hIJUAqaqqyvnb3/5W4j0lAAAm8pTCkvf9K+bPn7944cKFNgGgI3j6UrJvlSf70YeF4XRMFDVlypSJGzZssOR9pXv37uPkvdXoBJBM6GV//PHHxn+eAQAAfF2HT69as2ZNdV1dnSqD5TR9FYgSFRU18sc//vEo/dL8jM+XePrpp3vOmjXLyIBGl2RoaWpq2lNeXl6tT1vy7wwAFhCgZ6LbBgwYcP+dd945W59nFQjQvjx9qZycnOMyAbJHeLpc5k6a98ZETqdz2gcffDBYWNBDDz2kYoVuwkDeSX8hISEHxo8ff1QAAACgS3XK+vJXXnklV3YETwnD6UAtatKkSVPmzJkTJCyqf//+U4KCgoabGLjqgbDq48ePH0hMTHQJAIDp3C6XSw1YjrznnnuWbtiwIcp7XgBoV7Jv1VRaWpoim81WKIMl+8vxQ4YMsdw+ID/60Y9iBw8ePEU2A0ysEKATXM3V1dWq/FWzAAAAQJfqlMhCBjKHZEdQrQIxugyWDtSC5LXOGDNmTB992mozRANiYmKmy+MgUwPXqqqqQ88999wR/ZIZwABgtgCbzebWSf074uPj55//OwGgXb344ou5ViiDpci+cp/vfe97ltsHJDY2drSMCdV+gcLUCgHy+gpXrVqVKwAAANDlOmWEulu3bqdOnDiRIZtuK5TBio6OnvTjH//Yu5zdUjNEN2zYEDl79uzJsmnqChhXU1NTikzqndavmQEMAObzlsLqPnr06IdlEty71xfPAKCdnT17tkjGC3tV2+QyWHpSmK13794J9957b29hITLpM07eUwcIA3kn+8nPcFp9ff0hAQAAgC7XKQkQu93e9uqrr2bLDmGNMJwO1Pr0799/orCg4OBgtf/JGBNX+ui/bWNMTMyBpKQklrMDgLW49bNtzo033nif6KQ+FGA1r732WkNWVtZ+2XSYXAbLOylMrRyfNGnSSGERTz/9dGRUVFS8bIaYmODSf1fX0aNHM3/1q1/VCgAAAHS5Tosqamtrs2WHMFsYTgdqERUVFTPHjh0bLSymrKxsmjyMMHGlj/7bHv3ss8/y9ClKnwCAdQToZ1vQ+PHjH0pOTp4qAHSINWvW5DidzkJhAUFBQUO+//3vjxPm89xADx06NNzhcKhyucLgBNeJt99+O0sAAADAJ3Rar3PkyJEqiMkU1hAwePDgaXfccUcfYSEbNmywzZ49W21oGCMM413RUldXt2/9+vUl3tMCAGApesby+CuuuOKhDz74IFQAaHcRERH5MuG4T7VN3j9Q309CZBJk+gMPPBApzOb5Q8r4aFRkZOQYYbaDISEhBwUAAAB8QqclQB5//PHW9PR0NROmRRhOBTMycBv60EMPmd65/wc1NTUDJk+ePF6Yq8Vms+1bt24dy9kBwKLOm7F898CBA28RANrd73//+5pPP/00VTadJu8fqO8nAeHh4VfOmTPHu7eQsRdst9uDFi5cqMpfRZmc2MrMzMx+6qmnygUAAAB8QqeuO961a5faCD1fGE4Haj1kImSGDGZM3Qz8X7S2tqrVH0Yu4Vd/U/n3PL1+/fpc7ykBALCyPjLp//Azzzzj3byY5wLQjjZv3pwp+17HhOFUIsBms4284447vBOnTMwMeO6PMjHQX/apVfkrk/dQOrNt2za1+oOV4gAAAD6iUzufkZGROfKQJwynEyDBI0aMmHn//fd7y0EZPzAyb948lQAZJAzj3aBRHtXm50f0aYIaAMC3b7755nt0Wz0XSIIA7WTgwIE5gYGBahWI0WWwdNwQ09TUND0hISFYmMnzB3zwwQeHRkdHq3hBmLiyR39Oc3v37p0mAAAA4DM6NQGybNmy+s8//1ztA9ImDKcGzUNDQ0dde+21Q/QpowfMt2zZEj106NAJwsDBH12eoK2hoeHA66+/fkoAACxPD3SFTpo06cFjx455yz+SHAfayX/8x39UOp3OdNlsM7kMlmaT/c0rBgwY0Fe/NvKCv/Wtb02Sh97eyUWm0SvGc0+cOFEiAAAA4DM6e/mxWw4SqBkxJSbP5FL0oHn/kpKSBGGBGaH79u1Tgz9xwlzVK1euzBIAAIhzA12qOW3w4MEPLV++3Dtzm1UgQDtJTExUpYROCAvo379/3A9/+MPh+qVJgZLnnpiQkNCtqqrqCtkMO28vJdM0fP755xl2u90hAAAA4DM6vfdZX1+fLpMfhy0wk0vp3qdPn+lz5swJFYYbOHCgSn4Yu+l7a2tr5sGDBw8LAAA0PYgnD4H3zZo16zp9mlUgQDspLy9XK0AyhOF0MrX35MmTp8nBc9OyA5574pgxYwZERkZOFYbSk/sKTp8+vV8AAADAp3R6BzsxMfHMjh07coVFyEBm4g9+8INewmAyUAu6//77VQIkQhjGu1IpODg49aqrrjoqAAA4jx64HDRhwoSHf/7zn/fQp1kFArSDH//4x+X19fXGbyitk6lh8mfWsWPHjNw/UMZD43v27DlEGEpN7nO5XPkOhyNfAAAAwKd0egIkKSnJWVFRoTY0rBSG04MiQ2NjYycLgzU3Nw+Jjo5WNX2N26RSr1RqLCkpyXr88cdbBQAA5/GWcrHZbPPvu+++Bfo0G6ID7UD2w9wbN25UccNpYQEqZnj00UcH6ZfGdKrnzp0bOnz48BmyGW3q/h+S49NPP81YsmRJowAAAIBP6ZIl1rJzr5YGFxncAfbQgyIDSktLVYff2GK348aNU/t/TFFtE0ubyaRO/muvvZYjAAD4V27dn4maMGHCQz//+c9HeM8LAO3hgPzJNH3/QH0fie3bt2+8MMzgwYN7hoeHq3goyMT9P/Tf7oTL5UoR3PsBAAB8Tpf0QIul2trawwZvgHe+oMnSD37wA+PKQ3ktWrRogjz0EYaSSZ2DTqczTwAA8K8CVH9GDc7abLarfvaznz2wYcMGm/d3AsBlkQPnZeXl5Vmm7x+o46Ju8lpnDRs2LEwY5Pvf//7wnj17jjE1iaX+dg0NDYXZ2dlZAgAAAD6nSzIQS5cubUlNTVWrQBpNn82ljB07duScOXNGCQP95Cc/6RkSEqJWf5iazXJlSXa7vV4AAPAVdH/G1r179/vHjx9/hfe0IAkCXJZFixa5duzYoeKGM8J8AePGjYufN2+eSROLAmWsMF0eexsc97WlpKSkP/3009UCAAAAPqerBq1V71ctET5x3msj6Y7+cPmTIMziGdA5c+bMaJfLNVWYq2Tbtm3M5gIAfK3AwEBvKaxRY8eOXfbHP/4xUv+KcijAZbLZbCpuMH41roobevbsOXzx4sXG7B/47//+75FDhgxRSeEIg8tfVcgkj/qMOgUAAAB8Tpf1QtetW1cgB88L9HJ2Y2dH6uvrdtVVV02x2+1BwhyeAR0ZoI2RHf5hwlxZ4eHhGQIAgK/nKYWlBsOCg4PvuO66675z/u8EgEv26aefniwsLLTKhJS+MhFyxcKFC23CAPfdd9+AqKioCaau/tCxXrG8xnQBAAAAn9RlCZCioqLanJycVGGBmTKqwx8bGztu0qRJRu2TMWfOnLBrr71Wlb8KNzWo2b17d86TTz5phZILAIB2oAfDesTHxy/79a9/PVCfZhUIcBlWrFjRWlBQkCyb1SaXz9X3D5u8fyRMmzYtRhigqqpKrRQfZOoeLuq6Tp8+fXDt2rWnvacEAAAAfEqXJUCSkpKcffr0UYFMuV46bCzd4R9dWloaLwwycuRIFcyomr4BhgY1Z/bs2XNQMHAFALhA8nno1qtArv/Zz352r91u9/a1GBQDLkNra6sqMVRk+mbo6v4RGRk5asaMGeOEn4uLiwsJCwubKZu9hIF0DFtbXl6+99lnn23Sp4kbAAAAfEyXFmKVCYEceSg2sR7slxjco0ePKcIgjz766AgZ1MQJA+nZhYeGDRuWKgAAuHCeUljyORIkPXjLLbd4Jz8wKAZchtdff70kJycnWxhOx0WD5fFK4eeJ0//8z/+MmT59uop/jMxa6b9VqUyAEC8AAAD4sC7NPKxYsaLi+PHjabJp9hKQv7Pddddd4+12e4QwQ8DkyZMnyWN3E1fwqNmFLpcrVzZLBAAAF0nPUp84derUh5577rlQAeCyJCYmNtfW1u6RzTqTy2Bp4VdfffXU1atX+/W9o3fv3nEyETxcxwpG/tFOnjyZvWrVquMCAAAAPqtLEyAykGmSAwSeQMb0MlgqUAsLCxsfHR09Vvg3z4jONddc07umpkYtaQ8ydAVPw86dOw8uWrTIIQAAuATq2R8aGnr32LFjbxYALpf72LFjyfJ7VWKFMljBwcFjBw0aNFz4r4Bu3bqpWCFWxwpG/dF07Nosj3veeOONGgEAAACf1eUj1wcPHsyUh5Oml8HSgdr44cOHTxL+zTN7a/LkyYNlUGPUniZeOqA50tjYuE8AAHCJ9LO/77e+9a1l7777bm8B4FJ5vkx/+ctfjlmoDNaYgoKCmcJPyXte+PTp09UG6GHCQPpvVJmZmXlAWKOaAQAAgN/qyqyDJ5B56aWXTp46deqgsIaoW2+9Nc7tdvt9tuepp56aEB4ePlAYSAU0MvlxWBEAAFwGtQokKCjoFvn8/+55p9kQHbg4ngk4KSkp9ZJaPd4ozNc9Xlq4cKFN+CHZnx4hf0abXK5MxrC5K1asKNIvua8DAAD4qK4ciPf0ht9///1qOTCwVzZbTC+DpYSEhMT94Q9/iBV+LCEhISI6OnqGbIYb+jdr3bVrV/rPfvazBgEAwOULkwOBy3bs2DFev2ZDdODStPXr1y9ZHsusEDfMmjVrwre//e1+wg+dOHFimjyMNLhcmUsmd5JDQ0PP6Nfc1wEAAHyUL6xEcMskSIYMYipNL4OlyOucJAOCCcKPzZ8/v2+3bt2mC8/kLrP+ZjqYPil/VPkrlrMDAC7LeYN/06699toH7HZ7kPdXAsDF8HxnPvjgg6KWlpYcK8QN0gSHwzFN+Bm1akXe71Sp3B7CQHpVS11ERMSBxMRE9gsEAADwcV0dOXgCmVdfffVoZWVlprAAGazF3nXXXeOEH1u6dOmosLCwkSYuaVfBtPwsHtmxY4dVyrIBADpHYEhIyAPTp0+fo1+rhyhJEODCeTqen332WfWpU6d2yabDAqtAYq+66iqVSPCre8W8efP6jB8/3q8nfH0dldh2uVyFGzduzPeeEgAAAPBZXZ0A+fv0mbq60+Hh4Smy6bJAIBN0zTXXTHr66acjhR+aM2dOUHNzs1r90U0YKj09/eAzzzxTLQAA7UU93Gvlj1O/tlypED1pYNDNN9+89IknnogRAC5JYmKip/SQbFYYXF7JK3DSpEkTf/e73/nVPaOlpUUlbcYIA3lj1YaGhuSkpKQT+jTlrwAAAHyYT6wdT01NbZWdyHTZrLPCcnYZrE1xOp2jhR+SAU2My+WaKZthpgWdOqA506dPHxVUs5wdANpPq/zZKX/26teWmy3rfWYGBwfPv/322+/Qp1kFAlwcz/dl7dq1hY2NjTkWSIAok0JDQycKPzJ37twp8jBEGEjHqo2tra37X3vtNfYLBAAA8AO+kG3wRC4vv/xygexIFggLkMHa+AcffNAvEyDyf/fgcePGjRcG0gHN8ZqamnQBAGg3brdb3WDT5M9q+VOhE85WmzHr1tcdfcMNNzz82WefDfeeFwAulOf7kpOTc7q5uVmVwXJaYPX46AULFkwWfuKFF16IGjJkiCp/ZROGcjqdJ2TsmqdfksQGAADwcT6xCbr6R1FRUbEMYFQZLLfJgYy+tojJkyfH6QEhvzJ79uypMoEzwNS/UUlJSdbWrVtLBQCg3cjnhk0+N1yy+Y782agSzvK1GjSy0uB/gL5u1Z49c+bM++12u7cfwAAacBFUGazy8vJ9slltgdXjwcOGDZv43HPPhQo/UFZWNlYe4oSBvPGPjOH2paamFunTJLEBAAB8nM9EDGoJsQxk1OzQVpMDGX1tgc3NzVMXLFgwUPiRWbNmhQcFBV0hm91M+xvpgKa+paVl7zPPPNMoAADtKaCxsTFCJkJq33rrrTVy8OiYfo5YbuBfX3dQWFiY2hD9Sn2aUljAhfN8V1auXHm4oaEhR1iAy+WKz83N9YvV44MHD54kD+OEgfT923nmzJkDmzZtqhQAAADwCz41iv3SSy/lOZ3OY8ICgoODp44bN2648CNPP/10r/Hjx/vNEvyLoQOa8vz8fJWEYyYXALQzm80WqlY85OXl7ausrHxNnmqTg3rqV1YthTX6uuuue0g+WyMFgIvhuWfU1taekElVVQarzfQyWLKfOlHGDT6/qmLDhg22e+65R5W/Mva+Jj9r5S+++KI38UbiGgAAwA/4VAJEDogUyEDmgGqbHsjIBEj/J554wq9mRw0ZMkTN6BpicPmrXBnQHBUAgHYnEyCitLTUJpMgbV988cXr8tQ+dU5YbwApwLuKMioq6q4HH3zwVn2eVSDARVixYkXrwYMHU2Wz3vQyWDI+il66dOnE88rm+aS0tLTB0dHRKl5QZaKEiZxOZ3phYWG+fsmkKQAAAD/gU51oGcicOXToUIZsukwOZHQCIbhHjx7TFi9eHCP8g+3UqVMz5LGfoX8bR0tLS3J5eXm1AAB0BHdVVZVngP/OO+88fPbs2VWy2aieiaYOlH0N7yqQnhMnTly6ffv2WO95AeBCeO4la9asOeRwOIwug6XvjwEysTBV3kMHCR82QZKHKaotkzbCJN7nVFBQUOq4ceNOCgAAAPgNnxvJXrlyZbbL5TojDOZNIISEhEyfPHmydx8Qn44SZKImMi4ubqpsBgvD6EGo2l69eu1PTU1tFQCADrd//361IfoH6pmoB5astiG6NwnyrYSEhPvke+DtB7AKBPhmnvtFaGjoUfld2iv+X1LROOclEqbFx8ePFT5s0aJF4+WhnzCQ/jvUHjx4MEutZBQAAADwG744lf+QzWZLF4ZTgz1BQUEjH3300VHeU8KHyQTIyBEjRowycZauGnyTSbfDGzduLNCnGHwCgA727W9/+2xiYuJK2Sy16Ibo3lJYIT179nxg8+bNU/R5VoEAF+j5559v+eSTT9T+bU0WKIPV5+67754gfNRTTz3VPTg4WO0VaOwfQsZBmfK5lSsAAADgV3yugzp79uzjbW1tB4XhdCIhSh7j58yZEyR8nNPpVOWvhhi6nF2VZUl++eWXT3tPCwBAR/I8TOS9d2ddXd0bwnM7tuatV1/35KuuuurhJ554IlQAuFCe+8jbb7+dI2OHPGG+IJvNNn3JkiW9hA+qrq4eLeOFacJgMg5KHzBgQJEAAACAX/G5BMiiRYtcn376abZs1guD6VlqQQ6HY0ZERERvfdonswuPPfZY8BVXXBEvm/6yX8nFapA/qvxVowAAdAbPqP/jjz/e+t57770mmwdVgt2KSRDvdffp0+fuX/3qVzee/ysB4Ov8fTZRVFS+/A7tExYQEhIy4/bbbx8hfNB99903Vv7v88n/be2kWcWoTz75ZIsAAACAX/HJJcq7du3KlAejNzT06tev3yQZMAzWL31y5Oeuu+7q37dv3wkmDkypgSeZhCpZvXq1FWYOAoAv8Qzwy2dgZktLi9oQvcWqSRCtb48ePR559913vZMiWI0IXIBnn322afPmzaoMltH7uOk9TobMmzdvnPAxCxcuDLnuuutU+atwg+/hBcnJycZXKQAAADCRTyZAZs6cme9yubKE4VQgIwd7+t54442ThA8rKipKkIdRppW/8m6WKY/7Pvvss2IBAOhMapTM82DZsGHDWzIJ8rFqm/asuRDnXfPc2bNnLxQALsrOnTuznE7nYWEwvXo8rKGhYfrNN98cKXyITN4Olv3p6cJzOzPzHq5iU5vNxv4fAAAAfsgnEyDz5s1r2bp1qyqD5RQG04FMuAzYrli4cGGU8E0Bffr0URuzxgrD6Pffcfbs2f3vv/9+lQAAdDbPVOElS5aUb9y48RXZPOM5ad1VIKG9evV6aO3ateMFgAs2bNiwnKCgoFTVNvz+ERAcHHxF//79B3pfCx/w2GOPjQwLC/PpCV2Xqe2DDz7I/NnPflYnAAAA4Hd8MgGiZGVlZchDoTBfwMCBA6c+8sgjfYQPeu6556JvvfXWOGFoLXKHw1Hx17/+1VtujXrrAND5PPfew4cPf1hfX/+254QFV4GcZ/q8efOW2O32IP2aZxPwDdTAdENDQ7psOk2/f8TExIz54Q9/OFq/9Ilsz8SJE1Xyo7t3dbWBinNzczMEAAAA/JLPJkBGjhyp9gExfpmxDhSGTpgwwefq+SpBQUETwsPDxwpDOZ3O9Pz8/CL9knrrAND5PPdeOeDfvH37drUXyCFhUXrmemCvXr3uGzx48DXe0wLAN3rjjTdUAuSIMJiOG6JHjRo1fc6cOUHCB8yePbtvXV2dKn8VpFdXG0Xflw9NnTo1XQAAAMAv+Wwv9b777quur69XZbCMnUqk6EChx8mTJ30mkDlfbGysKn81WhhGB5DusLCw/ZMnTy4VAIAul5WVldrQ0LBWGF4C86ucN3N9yKJFi5Y999xzMd5fCQBfq7KyUk2eMnqWvo4bgmw225Xx8fHe1eNden+YOXPmoMjIyGnCUOq+LJ9L2Xv37j0jAAAA4Jd8NgEiO5vurVu3qpk2ZcJ8wYMHD54+cuTIGOFDli9fHjx//nxV/ipcGEYHkLWZkt1uNzrJBgD+Qt2Pd+/evU42PxcW5d2/ICoq6rYHH3zwdu9pQRIE+Fq/+MUvqioqKg4KwydPKd26dYt7/PHHh+uXXbpK7IknnhgfHh4+UJir4qOPPkojXgAAAPBfPr1OOSIiQm1meNj0zVDV9cXGxo59+OGHhwgfcvbs2aEyURAnDOVyubJeffXVfAEA8AWeAf5bbrnleENDw0rZrPWu1hMWomYb635PdExMzLK//e1vwwWAC/Lee++p2KFEGEzfF/vIJGmC6OJYLiEhISI6OnqGbIabuP+HvhcfDg0N3S8AAADgt3w6AZKRkXGqrKws1/TNDHXnup/NZlPLx33mYquqqibKw0RhKPm5ShsxYoTRtaIBwI+cS3Q888wz79bV1W1Wq/XkM9JyKx/OS4Jcdccdd9xnt9tVf41VIMA3CAsLUwmQbGEwvYo5TPbTZ8l+bLQ+3SX3hgULFvTTCZBAE/f/UPfiioqKQ0eOHDkpAAAA4Ld8uqcqA37nvn37VCBTY/IqEB0wdB89evRMec2hwkfcfvvtavVHH2Gm5s8//zzrySefbBEAAF/hGcSTz8J6+fx/RTaPmD4J4hsE9erVa8ngwYOv0K9JggBf4/Dhw2eLiopUGSzjV46NHDly8pIlS7ylp7rkeh9++OGRMuk0ysQ4TV9TfUpKSirxAgAAgH/z+ak6svOplhwftcIqkJ49e064+eabewkf8Jvf/KbX7Nmz1eqPAEOTT4Xbtm0zeoYgAPihcwP8Z8+e3VNbW/uG8FR8sWQpLLe+7jFykHHpu+++GyEAfC21T4NMnqbIZqnJk6fUvSEiImLgwoUL40UXmTNnTlBjY+N02ewmzHUsNDQ0WQAAAMCv+XwCZN26dUclq+zTMOzMmTOThQ+oq6sbJ4MrT1BlYvKptbX1YHh4eK4AAPgaz6jlokWLXDk5Oa/K5l61UlI+k6y28iFAX7dq33nllVfO0+dZBQJ8DTlgfUAe8k2ePKVXj3eT/dlZMhERJrqAfJ9j5P1JrU4LNfG9VtdUUlKS9+abbxYJAAAA+DWfT4AkJiY2ygEQVQarWRhMBw4DwsLC1EyqLv+73HfffeNkcDVMmKntgw8+yPrVr35VKwAAvsjzUJw9e3bh0aNH18hmo4n15S+Evu5evXv3fmTlypWx+rSlVsMAF+P555+vyJSE+QImTJgwdenSpV2yevyee+4ZMnr06PHCXM0yBj2watWqBgEAAAC/5g+jCW0DBw40fim7FnTddddNfuGFF7q0zIXdbg+bKMlmmKHv+Ym0tDQrBMYA4K/OrXL47//+743Nzc1bVduKpbAkTymsgICA6+fOnXu3+H99N1aBAF8iKSnJefr06T2yWW5w7OC5LwQHBw8bM2ZMl6wev/LKK+PlfWmAvi8bRV9T2YABA1QMat4FAgAAWIxfTKc8duxYnjwUmb4PiOpsh4SEjBo9evQo0YVycnKGysGmBNU27T3XgXD20KFDDwoAgM9buXLl2X379q2SzRN6NYQlS2FJIXIw7qEtW7ZM0ecphQV8hcrKSrWHoMmxg/e+0C80NPTKhQsX2kQnSkhIiJDvrSp/FWPi6jx9TUXl5eWUywUAADCAX/RY//u//7sqPz8/TTZdwmC6sz1cJnymiS4UFxc3Ojg4eKIwkAqEm5qaco4fP14mAAC+7NwA/6effprkcDjWi/+3IbrVeDdEn3zbbbct+eCDD0K95wWAf7F27dpT6enpVpjsEjRVWrBgQYzoRHa7vffYsWO7bAP2TuA6fPjwgVdeeaVavybZDAAA4Mf8IgGSmpraKgc+9spmpQXKX3STAcWUOXPmBIku8vjjj8fZbLZuwkxV77777kEZuLGcHQB8n+d5L+/ZjkOHDqkN0TPO2xjcSs7fEP2eUaNG3Xj+7wSAf7Bt27YWGTvsls0qk+8X+tpGDRkyZIzoRIMGDVITpYYYGJd5k81n3W733sTERIf3vAAAAIDf8ps1y1mS0+k8boXyF9dcc834u+66q6/oAvPmzevfo0cPz0bspgWMuvxVXlNTU6oAAPgLzzM/Pj4+Jzk5eY1stlh8Q/T+o0ePfvivf/2rd+NjBuaAL5GWlrZfxg7HTL5f6GsbVlJSospRdVZ8ZCstLZ0pj30NjMs8yWYZMxSnpqZmCQAAABjBbyKCV1999fSxY8fSheGBvhqkDwgIGG2z2aaILnDDDTcMCwoK8pTgMi1gVOWvKisrDxUXFx8TAAB/ca4U1jvvvPOWy+X6SLUtWgrLm8yfe/311y8UAL6M536xefPmE9nZ2VYogxU+derUaU888USI6AQLFy6MGj9+/FTZ7LLV6h1F31/V/pNpKvbUp1llBwAA4Of8ZoR7+/btDXJgfo9sNpg86KE3axw8c+bMLkmAPProo2Nl8iVWmKlZfo4y7HZ7swAA+J1nnnmm/IsvvlgtmxVWXQWi+wnhEyZMWLpixYpOLXsD+AnPKLbs8zXKgyqDVecd2DaVTEiMmzZt2nDRCR566KHRw4cPH2Xwe1ovY6E9KvbUr1llBwAA4Of8avQgMTHxoMPhKLPAoIctISFh/PLlyyNEJ7r55psjXS6XKn8ValpQo6/nSGho6H4BAPA351aBfPbZZx/Kw1uek4YPan6D6ddee+0SmdQ3bhY20E7cERERqt93UphvdHBw8HTRCdra2tT/nyHCQCrBLGPNU2+//XamAAAAgDH8JZPgGfR46623Sk6cOGGVDumEs2fPjhWdw/P+Njc3x8pO/wzh6f8budq7YODAgbkCAOCPvBuiNyclJakN0XMNfVZdqMCxY8c+sHjx4qsFgH/muTmsX7++uKmpKcMC94qeMiE6dcOGDTbRgZ544onQmTNnqlK5Uaa+p2VlZWkffPBBiX5J+SsAAAAD+EsCxDPoMX/+/LPdu3ffK5utFqj9PTYwMHCi6Bye9/d73/veyD59+owSBpJBmvPIkSMZH374Yb0AAPgrz2DU9ddfn7p79+41sukUFqVXvwwZNWrUspUrV0br0wzWAX/nTZjWVFVV7ZLNZpNjB3U/GDx48ATZ7CM60IIFC/r37dt3nImr7/TnwxETE5O8c+fOs/o05a8AAAAM4Fe1pGQQ01ZXV5cmm1UWKIMVfd99902Q19wpF5qQkBB84403TpOJgmjTAkR9PWVFRUX71GdIAAD8lXcwyp2UlPSGHIRLEhZ13uzrBbNmzVqg2+dKhQHwcFdXVx+Qx9Mmxw76fjChpqZmmuhABQUFCfIwysTVH/rzcVZ+XjIEiQ8AAACj+FMk4Olp//Wvfz3a1NSUIyxg0KBBE+XgTqdsSD5kyJAeMlFwhWyGmBYg6us5okogCACAEf73//7fJ/fu3btSNqutuheITvBHjR8/fumvf/3rofo0A3fA33lih9WrVx+tra21Qh9w0F133RUvOk5Anz591P/9AcJQjY2NmS+//PIR/ZJkMgAAgCH8aaTbE9AXFxeflAF/svDE/cZP5p/crVu3CaITPPHEE4P79evXWSW3Ol1ubq4KaCoFAMAYe/bs2Sr7AhutuhfIeRMWrrnvvvvuP2/VKAN3gI4doqKizsj7xBey6TQ8dgjs0aPHxNdffz1GdIDf/e53MXPnzo0TBtKfC/WP5KqqqlP6NMlkAAAAQ/jdVP/ExERHQUFBumw2WqAMVuzSpUvHiU4wYsSIKfLQ19DyV2ebm5uTt23b1iIAACbwDPD/27/9W0NGRsYa2Sy0+CqQoOHDh9//4IMPztCnGbgDNFX+tLCwMFU2KywQO0xKS0vrkAlN0dHRceHh4WNNvNfqz0V9UVFR+ooVK1oFAAAAjOKXUcALL7yQ39LSUigMpoOLoO7du0/84x//GCk6hmcA6emnn44MDg6eJZtRJpa/ku/liZycnDQBADDFub0u5IDVHnlYFxAQ4F0ZaqnBf/Wc09c9bsiQIUvlYG+E/hWrQAD9PVi+fHlhY2OjFcpgjZk6deok0QGGDRs2VR5Gmrrirrm5OU9+Tgr0S+6fAAAABvHL0e6mpqZjra2t+4XBvMGFvM749PT00aJjeAaJFi9e3Cc2NnayMFRubm6OTJqdFAAAk3ieYYsWLXK9+OKLr8vnZbJO4ltu4Mo7eUEev3v33Xd/W59mQ3RA3ydqampUWSOVLHUZXgYrZOHChZNkIjREtKMNGzaE3HLLLWplSZgwjHdFi81mSwkJCfHu/8EqOgAAAIP4ZQJk3bp1tREREWopu+m1fEVQUND4m266qaMSIB6hoaGqnu8Q095LHdA0Op3OvSkpKfUCAGAazwD/D3/4w8KCgoJXZLPeoqWw3PoZ3mvUqFGPyMHP/t7zAoAqoevavXu3Wg1cbWoZLO+9T/brp9TV1Y0S7ej48ePDZIJgvDCQnnTWLGOF9GeffbZJAAAAwDh+GwF8/PHHh+ThpOm1fGWnPOK+++6LO29j0/YWXFFRoWqG9zbtvdSBYEVUVJRKlpmdKQMAazo3wP/uu+9udrlc76vBLH3/t9Lgf4Au+agmTtzw9NNP3yPb3tUfrAKB1Xm+A+vWrctvbm4+KAx1Xmmqyddee227blZ+5swZtVK8Q0pr+QKHw3Fs5cqVhwQAAACM5M8JkMNyoCNVmC9QDmJMKygoiNWv23Ug4+c//3lUfHx8gmwGCcOowaCWlpa8t956q0ifYhAIAMzjubf/4he/qCouLlarQI6rgcC2tjbL3fN14ickMjLyoZycHG9pS0phweo8X4xbb731mOwb7hWer4rR+dHoefPmTWzPyVO33XabSqj0FIay2Wyp4eHh+QIAAABG8tsEyB//+MfTMgGilrIbP7M/NDQ0/t577x2uX7ZrxLZgwYIRMTExo0wLBHUpEGdFRUWyHBA7q09TCgQAzHNugL+kpCSpoaFhvWy26dnQVtsQ3TuwO2XUqFEPqbr9AoCH2i9o69at6bJZZ+pG3pq8vIBptbW1A0U7kImUvldeeeVEYa42ed9Mf+mll6oEAAAAjOTPNY/cmzZtypZHozureiC/34033tghdXcdDocqfzXQtEBQl/Oqlde3b8WKFa0CAGC866+/3vmnP/1prRzMSjtvFYilSmHp61aTJ+4ePnz4Dfo8q0AA6cMPP8yV94cs1TZ5FYjNZpu2YMGCMaIdNDU1jZP3lHhhrlMypswRAAAAMJZfb/qwZ8+eXHnIVG1Tgxg9kB/c2Ng4be7cuTGiHdnt9rCEhASVAIkWBpLvWeHf/va3wwIAYLpzA/z/9V//lXP06NHVstmsn6GWG/jX1z0gPj7+kd/85je99GlWQcLy5HejUE2OUW1TV4HoyVN9r7rqqgmiHSxZsmSCfN+GCHOl5+TkZAsAAAAYy68TID179jza0tKilrIbG8RoAUFBQQm9e/f2LmVvl4u95ZZb+kdERIzTgZIx9PW4ZYCbkpaWdkoAAKzgXBLk/fffT3S73R+qtmnPuAvkVtct+w5zb7zxxjvPO88qEFiaWhX86quvHpT3hyZhKJ0ADWpoaJh+66239hCX4bHHHosYN26cKn8VYupks+bm5oN2u/2kAAAAgLH8OgEiO6vON954Q83YMTaI8YqOjh711FNPjdQv2yUCOXz48FR5GKYDJWPo62kqLi7ev3379gYBALCUJ598sqK8vHylbJarZ4IFkyAB+lkYHh8f/7Ac9PWWwmEVCCzvoCTvCcaXPAoJCZkxfPjwkeIyxMbGjpCJjwTVNnSyWfWbb76ZLa+NeyMAAIDB/H7kOy8vT9XxzRMG0wM3USNGjJg6Z86cINE+AocNG6YCmgHCQA0NDcdfeumlQ/olM14BwBrOrQLZsGHDjtLS0rfUOdMS/RdK9R+Cg4NnLlu27AG73d5e/QfAr33nO985ZLPZUlXb5H1AQkNDh/3oRz8aKy6DvHeMlu9Vu5TS8lHZlZWVGQIAAABG8/sRgenTp6vkR5YwmHcpuzzOnDBhQm99+rIG9ZcvXx591VVXTRKGJgccDkdqfn7+Mf2SWV0AYB2ee/6TTz7ZsnbtWrUXiGemt8kDnV9F9R/kdctD4P3XXXfd1QKAmDdvXkt5ebka9HYYvg9IaGxsbMKsWbPCxSWQSdNA+d+r8ldRpq6iq6mpyaqvrz8iAAAAYDS/T4AsWrSovqysTJXBcgnDxcTETPzxj388WL+8rJGc4ODgOJvNNtK0ASEdoDmjoqL2JSUlnREAACvyjGr+4he/yCgqKlorm07D9wr7Svq6h11zzTVL//3f/z1aABCJiYlqD0FjV5DryVOBsr8/6+qrrx6kT1/UTfDAgQMDZHJg+t//zxm5iq7prbfeypKJHocAAACA0YzozW7ZskXN4ioWBtMD+33kwP5k0Q7i4uKmycMI0waEdIBW+dlnn3lrO1P+CgCsx5vdd2/btm2dPO4UFmez2RbcfPPNt513iucjLCsmJkZNnjooDBcWFjb6Jz/5ySXtIXjTTTcNj4yMjBfmKmhpaUkVAAAAMJ4RCZCQkBCVADkkDKYH9iNqa2tnyORFlLgMGzZsCJk5c6Yqf3VJS+J9ncPhSF+3bl2hfkn5KwCwsCeeeKK0qKhIlcKqFtYWc8MNNyzbsWPHEP2a5yMsa8mSJQ2HDx9WCRCnMJSePNUtODh4xqXsIfjggw+Ol4nTfsJAegV83tChQ42OHwEAAPB3RiRASkpKKgsLC7OF+QKGDRs29aGHHuojLsOpU6eGysM4YSiZLNqvNkEXAABIubm5W+XhHdU2tZb9N9EDftd861vfuk/V9tenWQUCy/r888/3yUORMJR3D8H6+vorZb/4ovYQXLx4cYz871X5q1AT908KCAhwycR45u23314nAAAAYDwjEiAykG9LTk5Ok81ykzc5VYM2YWFhQ+fPnz9WXIaWlha1nH28MFPd5s2bsxITE43fEwYAcGFuu+22xry8vFWyWWRoLftvpEteBsnrf+iaa66Zrk+zCgSW1a1bt0x5yBKGGzx4cNzSpUuH6Zff9J333ChuueWWgZGRkTM9Jwwrl6tjxeJ9kgAAAIAlGDMKIAP6A/JQaPImp3rQpqfT6bykpexeCxcunCgPl7WKxFfJoCb3k08+yRcAAJznv/7rv1KOHTumNkR36QEwyw3+69UvY6+77roH7XZ7mD7NKhBY0qJFi2oPSrJp7KQZ9Z232Wx9vvOd76i9/y4k7vPcF+fPnz9Gxh3DTFwxp2PFwqioqHQBAAAASzAmAbJ58+YT6enpVqjjGjxu3Ljpjz76aLR+fVEDF7/5zW96DRs2LE4YqqWlJW306NEFAgCA86iVgV988cVrsrlbD4BZbuDfu/pFDojeff3118/Tp1kFAqty5+fnJ8tjsakryL17CLa2ts6aO3eudw/Br733LVy4MKS+vl4lTKJMXTGXmZmZ1dzcXCUAAABgCcb0auXARmtubq4qg1UvDKZnco2eMWPGUH3qoiK2sLAwtfpjojCT44033sj86U9/2iQAAPh/PAN+S5YsOXrs2LE1slln0VUgbj2ju9e11177cFZWlpEbHAMXSg6Cq1UA+SavIFeGDx8+ZdmyZbH65Vfd9zxvgowzeoeEhFwhm5e82txX6fvf6dLS0pRFixZRLhcAAMAiTJrW4x46dGiKPBabvMGpnok14OjRowniEmavysGfCfIwXBhI/t2PZmRk5AgAAP7RuQE/+ZzYJA/vqgFP+dwIENZKggSofoTuJ904cuTIe4TuS+j3ArCU9957r3rfvn0qCWJq8OB2uVyq7NPAcePGxX/Tv6v+8cgjjwzt27fvBGEgHUcda2hoSBUAAACwDKPWNRcXFxe43e7DFtjgtHtsbOz0uXPnhlzMf6Tqfffq1UsFNCEmLvWXf/eM8ePHZwsAAP6VZ4D/jjvuqP7www9Xy2aJ7i9YtRRWaHh4+IM7duzwrAotLy93CsBiVGm82traPbJZqhODpnWQA2w2mzp2DwkJUWWwQr/p3x8zZsxUeexl6oSy9PT0nP/5n/85JQAAAGAZRmUKtmzZ0pCcnKxmcRkfxE+cODFu6dKlvS/mvzl69OhIp9Ppmf1l4FJ/d2VlZfYPfvAD6vkCAL6MGtj0PPx+//vffyafGeuEZ+GDkYOe38RbCit+xowZD8pjQO/evetaW1sFYDUlJSXpLper0PCEaODo0aPjf/KTn/T6it97rnvx4sXRwcHBqvxVhKETyuoqKipS9u7dS7lcAAAACzGqZ6tmccmB/b3C3FlcHvrahvbq1Wvyxfx311577ZigoCBT9/849dZbbx0UAAB8NU+/ICkpyfnhhx++LpupFl0FEuC97m7dut37+uuvT5cDwG21tbUtArCYF198seLAgQMZwuAyWDp2GCG/75O+6t9R/3j66af79e/f/6LiC3+h34OTgwYN2icAAABgKcZN7fniiy+ym5ubj5k8oKGvLfbMmTNqH5AL/hvec889KvnRTZgpV/5kCAAAvp6nb3D//ffnVlVVrZLNJlUW0sTSkN/AOygaO3369IcXLFgwMjIyskEAFpOamtoq+9ZfyGalvg8YVwZLxw79ZexwpTzavupflPcAlfwYbGL5K/UetLS0HNq1a9dRAQAAAEsxLgHy6quvns3Ly0uTzTbDBzOCZsyYMfkHP/hBxIX8yw8//HBsSEiIqulrZFLoyJEj2X369CkVAAB8vXOlsORA2Nvy8NF5ZSGttiG6W/WVRo8efdvixYvv7tGjh+pTWC4TBHz00Ufpzc3NR/S9wNQVYUHx8fFTH3vssagv+2VcXFyITJCo8lc9TCt/pWPClsLCwuSPP/64XgAAAMBSjEuA5OTkOHQZrGphMNWRHz58+Og5c+aM+oZ/1bvp64igoKCpwkx127Zty1i0aJFLAABwgW677bYzr7/++iuyWaYGPuWz1XKlsFR/Qg52xsqfhfL1GLcFl8IAy5cvL8vMzFT7CBr7+Vdf7djY2NEyJhjzZb9fuHBhjEyCqFjByM0/pIq2trYUVTJZAAAAwFKM7OC+/fbbB+vr648buNH3OfraRrhcroRv+Fc9gdyNN944Xh5iTRvX0NeT17179zQBAMCFObcKpKioaEdtbe2bwqIrH9QqEN3sLX/6y/6FqYOfwFc6ceJEU0xMjCqDVWPyPoLSMKfTqVZ5/EuQJGOFcfI9GGFiGTAVNzU0NBRs3LixQAAAAMByTAtyPZ35N99885Qc0MgU5ou56aabJm3YsMH2df/SAw88ECmDuXjZDDEtKaSvJ08GNUUCAIAL5xngs9vtjs2bN6+VzSy9CkRYjNVWvQBfqrGxUa0AOW5qGSx9XRGzZ89OkLFD8D//Wt77VGJkgGnXrxNarrNnzyanpKRUCgAAAFiOaQkQz6hFYWFhXd++fffIZqOJm/h5qUGaXr16jbfZbH2/4l/xBi9D5L87Q5ipOTU1NePxxx9vFAAAXBzPc/LBBx/MqK2tXS2bDpNXjwL4Up4v/Zo1a05WV1enmnwPULFDz549x8n4aNj555cvXx4+ffr0abIZLgyj9zOpqaurS9m2bVuLAAAAgOWYWubAXVpaqmZxVZi2id/5dIA2pqCgIP4r/hVPQugHP/jBqMjIyDHCMDq5VXLixIn9AgCAi+dd7uFOSkraII+feF6wDQZgJZ4v/PPPP1/b0tKiymA1mDqBSscOo4ODg6eff37SpElDwsLCxph63TLBfezPf/7zIQEAAABLMjE74OnZv/zyy8fOnj2bI8w3eOjQoZO/6pd2uz1o4sSJKkESaVpQo5JbcpCqoKGhIVsAAHAZbr/99lKHw6E2RD9r0VJYgOUdOXJETaA6afIEKqnXrbfeGi/vcecu8ujRo2pPwWGmXnd1dfW+zz///JQAAACAJZnYy/WMWNTU1JyRHXtVBstpchksybZgwYIJMtER8U/nPYmgkpKSvvJ9mCmbQQYGNW0pKSkHN2/eXCsAALhMv/3tb7fV1dVtVG1KYQGW4vnCr1y5sriqquqAMJhK7oaGhsYlJiZ6SujOmTMnaPDgwSoB0lsYRseAjb169UrJz8+vEwAAALAkY6c3yU69KyMjI1U2awyfxSXCwsLGy0Bm7D+d9iSCnn766SHR0dGThWF0QFPmcDhS1N9aAABwmex2e+OOHTtWyuZhAcBKPP1mmQA5K+OGXbLZYngZrAkyTpqiGkuXLu12zTXXxAkD6RiwVF4rq8UBAAAszNTMgKdn/9xzzxVWV1fnCfONHzt27KQv+0W/fv3U+d4mlr9qbW09JgOaDAEAQDvJysraJ/sOr8smyXXAgtTqYnk4bfgEqsHTpk3zJD2cTud4eRhhatm/+vr6VLWyR79kaR8AAIAFGbsJuvpHaGjoSTnwv082ja6BJUXdfvvt48+v5auMGjUqpqKi4krZjDAxiDtw4EDWpk2bygUAAO3Ebre37dmzZ61sqlng7AUCWIdncHzNmjVFctDc6DJY4u8ldMdt2LDBNmDAALVX4FDTyv7pyV9Om82Wsnr16gp9mhs6AACABRk9tSkxMbFJJkFUGaxm0wcwZIJjohy0iT3/3D333NNvyJAhU4Vh9N+yVh5TkpKSmgUAAO3DMwJ46623FtfW1qpSWPX6PINmgPk83/P169eXBwcH75ZNp6nxg7oumRiIW7hw4VU333zzWPk6WBhGT/46u3379iwBAAAASzN7cwxp06ZNh2Snvtj0zUzb2tomV1dXjz//3IMPPjguPDx8iGnBm76eE9HR0abPzgMAdK5zD8zf/OY378rn6hbVf5DPHcqmANbhlvHDQfm9rzQ1fvDuAyJ/FstEyDhhKIfDkb558+ZCAQAAAEszPgGybdu2o62traoMltFlLAIDA2PvueeecwHMwoULQ+T1zpTNbsIwakZXTU1N7saNG48LAADal2dk8Pe//33NgQMHXpHNYgHAKjzf//feey/f5XLtV22D44fu8ucO+RNvaKLHrUohz5s3j3gBAADA4oxPgLzxxhtVDodDlcFyGr4KJGjmzJmTnn766Uj14o477ogZPnz4dHXepOvW9XybT58+nWy322sFAADtS412eh6cu3fv3lVXV/eGfI626ecPpbAAs3m+46NHjy6V8YNnH0HD44c+8qe3MPPeVrdhw4bMRYsWuQQAAAAszfgEiPLqq6/myoEL4zfLdrvdU2ViYLhqJyQkjAgKChqjB2yMoev5nqmvr7fC5vYAgK7hGQyUiXbnoUOH1sjmPvX8kc/UAEESBDCe/O63yfhBlcGqEtZgXJantbU194MPPsgTAAAAsDxLJEByc3MPywAmTbVNLoOlavg+8sgjQ1Q7KysrQR766YSBUc6ePZv/wgsvFAkAADqOZ0DwiiuuOJyXl7dGNhv1M5X9QAALkH3pbHlIV22T4wfTeP9WwcHBqfL+TbwAAAAAayRA+vbte7KqqkolQIxdxq5XekTIjv6o5557LjQiImKqfB0pDKKv0dXa2ppy6tSpSgEAQMc5Vwrrt7/97dsOh+MD1aYUFmANZ86cKa6trVX7gLgNL4NlFP23aqmpqcn86U9/2iQAAABgeZZIgKhl7KtWrcqSTWP3jNCzUuUhcNq999575VVXXTVcGEZfY93hw4f3bdu2rUUAANAJ1q5dW7l79+7VslnGKhDAGhITE10rV65UZbDqBPxN0erVq3MEAAAAICySAFEKCwsPuVwuozvCalZqcHDwrN69ey+KiYnpb9r+H0pVVdWR559/3lvPlwEoAEBHOrcKZNOmTTtbW1vfEJ7HLVtQAVZw+vTpzICAgEzVpgyWX8loaWnJFgAAAICwUALkpptuKrDZbBmqbWoAo2eljpQ/C+TPYBP3/3A4HPtLJf2SSBQA0NE8zxqZfG9JSUlZK5tZekN0AcBsERERBSdOnEhVbcpg+Q13SUlJ1s9//vMaAQAAAAgLJUAWLVrkyM/PVzOBWg0PYGzyJ1b+dBMG0QNNzTIQ3bd7925KEQAAOpOn43DNNdcc/Pzzz1UpLIeJkwwA/CO73e5cv369mkDVKOAvTmzcuPGgAAAAADRLRe+bN29WS9jzBfyOHmgq/fDDD73L2ZmGBwDoLOdKYcmBtTddLtfHnpOUxAGMFxAQkCYPlFPyH1kOh4MECAAAAM6xVAIkIiJCBS8EMH7GO8DU1NR0YNOmTcUCAIAu8pe//OX0559/vlI2KymJA5hv6NChau+5TAG/kJOTky1jhjIBAAAAaJZKgDz55JO1+/btUwkQCnf7ET3A5Gpra9u/fv360/o0024BAJ3p3CqQrVu3bnO5XIkCgPFUGd3U1NR02WwR8HVnd+zYkWG324n1AAAAcI7lCljLAEbV8T0p4G+qXn/9dVbvAAC6kif5/uyzzzbt3bt3jWweFgCMd/DgwX2CMro+Ta8Yz+vdu3eaAAAAAM5juQRIc3OzSoAcEvArTU1NBzdt2lQoAADwATt37twvD2pDdCd7gQBm69OnT6485Aj4LL1iPLdXr17HBAAAAHAeyyVA9u7dW/bpp58SwPiJtra/r2APDQ3dP3ToUPb/AAD4BFVi5b333nvD6XTuYi8QwGy33XZb0+eff65WFjgEfFXjrl27MubNm0epMgAAAPwDyyVAEhMTXdnZ2WoVSJWAzwsM9HxE68+ePZu1YsWKVgEAgI+YP39+yYEDB16RzVpvwh6AkdxnzpzZK49H+K77Hv03KZLxQooAAAAA/onlEiDKiBEjVNmKAgIY/+B2u/Nl8iNPAADgYz7//PN3XS7XFp2wB2CokpKSHKfTmc933feov4m8D+fLJBX7tAAAAOBfWLIHLzvJRxwORx4BjG/z1lQPCAhIr6qqIqABAPgST92rn/3sZ3Xp6emrZPOoem6xHwhgppqamtrdu3enyqZTwNe0fvHFFxnLli1rEAAAAMA/sWQGYN68eY5PP/00XTabBHyWrqnuPHr06MFnnnmGgAYA4EtUpsPzoJLPqS/a2trWyedWm06AkAUBDKP2/XE4HHtk84ReRc73vOu59d/iZGtra7I8srwfAAAA/8KqSyDcQUFBqkZsCWWwfN6x1157jU3rAQA+a9GiRa4///nPr8kBuH16dSm7ogMGOnDgQGZjY2MB33OfEaD+Fg0NDUfU30YAAAAAX8KyNaA+/vjjvNra2kLKYPm8zMjIyCwBAIDvObcK5H/9r/91uLCwcKVsNlIGCzDT9u3bqzIzM/fJpovvuc9wp6ampq1bt65GAAAAAF/CsqP/RUVFtcnJyaoMlkvAZx04cCDr6aefPiMAAPBN50ZBN2/evMnlcn2gSjhSIgcwT1JSktNms+2SzdP6FN/xLqTvsxVqZX9OTo5DAAAAAF/CsgmQxMREV1RUlKoVe5oZXD6r4sMPP2Q5OwDA13lWgfzHf/xH5dGjR1+RzVK1wlQOzlEiBzDMli1bsqqrq4/over4jnch/Tc4HhMTky4AAACAr2Dp+k/BwcFqcL1Yd57hQ3RSKjs2NjZDAADg286VwkpPT/+0trb2Tdlso38BmGfz5s0VZWVlqgxWG3sJdi11j62oqDj46quvlnlPCQAAAOCfWDoBsn79+jMnT55UA+wsAfExetAox+l0HhcAAPiJRYsWOZ555pk1MpGfQSkswDyq1JJMcn4hm2fZS7Dr6HtrfU1NzR55z23Qp7nXAgAA4F9Yutf+7LPPNtXX1++RzRpmcPmc+h07dhx8/PHHWwUAAL7v3CqQ//t//29WYWHhq7LZogdImZUMGOTFF1/MqqysPCrQZfS99VRFRUWaAAAAAL6G5actFRcXqxUgpczg8h26/FXBqVOnUgUAAP7jXBLkgw8+eEs+z3aoNpMsAGN4S92VyYF3TxksgS5TVlaW9fLLL5folySaAQAA8KWsPOrv6SS/9NJLJ06ePJkl4DNUyRCHw5Evj4cFAAB+6KmnnjpdUFCwSjbPMMkCMIZnlk5mZmZDv379dslmPQnOzqff82b5s3fEiBFV+jTlrwAAAPClrByRezrJ8fHxtfKQLH+aCWB8RuvOnTszlixZ0igAAPAv51aBvP/++x/Kw9uqTR8DMEtGRoaaQFVMgrPz6fe8Wv4NDtjtdm6uAAAA+FqW77GrTvPevXtVqSVmaPoAPUBUIo+qrAAzuQAA/sjz/PrpT3/adPz4cbUKJF/1MXSJRwD+zZPgXLly5fGzZ8/SX+0i5eXluS+//HKRfkn5KwAAAHwlq4/4e8tgHSktLT0k0OXUAFF9fX3hgQMHKEsGAPBnnj7GqlWrUvPy8tbKplOVeATg9zwJj3Xr1tUGBwfvls0WVnh1Ope8n+51OBzl+jVJKAAAAHwlqydAPJ3lmpqacjnwrspguQS63K5duzLtdnu1AADAf3n6GGqlqXyuqQTI5wKAKbxl7rLcbvdxVpF3Hr2SrkEmn1K3bdvWIgAAAIBvQG9dSk1NbVWdaNmsozxF19Gz58rl30KVE3AKAAAM8Oijj54oLCxUpbBqBQBjbNy48UhjY2OKahNDdA61kk7GDIWbNm3K954SAAAAwNcgAaI7zW+99dZhp9NZRHmKrqPf++LQ0NA0AQCAQdLT07fIw0bVplwO4Pc82Y7ExMSzLpdrr2DiTqfw3jtV0ik3N7dYnybzBAAAgK9FAkR3mt94440Tzc3NagaXm4GJrqESIKWlpVmvvfZamQAAwCCLFi2ql0mQNbJ5jHI5gDnWrVunymCdZBJVx9P3zman07n/mWeeaRAAAADABSAC13bv3l1XX19/QDYdDEx0Pp10qisvL09esWJFowAAwDC//e1vdx09evQ12WzT5XKYuQz4uS+++OKw7Meq8q2UweoELpfrxKpVqw7pl2SdAAAA8I0Y6T/Pyy+/fMjpdJYIdDqddDp1+vTpVAEAgIESExNdn332mUqA7NOzxRm8A/zc+vXrT9fU1KgEiItVIB3nvBX6+/Lz8wt1m4wTAAAAvhEJkPPk5uaqPUA8A/CUwep8x44dO7Ry5cpjAgAA83hGRpcuXVpQUlKyWjYbdV+DATzAz61YsSJTfp/LBTqMnizlqqioSJPv9xkBAAAAXCASIOdJTEyskIMSKgHiogxWp2uprKxMln+DWgEAgHnOJToOHTr0tjx8oPoaLpcrQJAEAfxacXFxjvw+q1K6lMHqQDLJVLF8+fIcAQAAAFwERvn/yQsvvJAjByMqBTqNngF7dtCgQap8gFMAAGAmzyqQb3/722c3b968SjZLbTbbufMA/NNLL71UqidRtVEGq+PImCH92LFjeQIAAAC4CCRA/smpU6fyZQIkQ6DTqBmwbre7IDk5uUCfInIEAJhITQ33POPeeOONneXl5W+qc5TCAvybTHq4169fr+KHswLtzruqJigoKG316tXs1wgAAICLQgLknyxYsKBYda5VmyXsnabt9OnTKX/+858r9GveeACA0RITEx3vvffeWtnM1GU3Sf4DfkzGDQflIV2g3elVNXU5OTnZss1GjQAAALgoJED+yaJFi1x79+7Nls1GlrB3PJ1kqpc/+5KSkpoFAABmO7cKZNmyZZmVlZWqFFaLXgUCwE+lpaUdz8rKIgHSQWTMkP32229nCwAAAOAikQD5Eh988IHaXI8OdidQSabW1taSLVu25HpPCQAAzOZNgrg/+eSTDfK4U5eD9P4OgJ9JTEx0vfvuu6oMVrVAu5MxQ0bPnj0LBAAAAHCRSIB8id69e+e3tbUdFOhQ3tmuDQ0N+3bu3HlSAABgMYsWLSprbGz8m2yeUZMCZBKEiQCAn+revbvaCD1LoL21fPHFF1lPPvlkiwAAAAAuEgmQL/HTn/60afv27WoFiFOgw+ia581OpzMlMTGxRp9m5isAwArOlcJ6//33P2ppaXlHtSm/CfivuLi4I/KQKdDeCvbs2cPkNODitMqfOgF/xngd4ENknNa8YsWKVgG/FCTwpT777LPMb3/72yqIGSPQYeSAT/ny5cspNwYAsCJP0n/RokVNr7zyyqply5bNkS/HqlJYJEIA/3P99dc7ZQyRdu2116r97aIE2oXL5cqNiIggXgAuTqjsS/SZM2dObWFhYXDPnj0ZTPcjwcHBjtTUVCbkAj5E3lMjn3jiiZg9e/Y0yZfBra2tBGx+hATIVxg/frxavq462iRAOlBTU1PaF198cVQAAGBNnr1ATpw4caCmpubVbt26/R/ZuaZ/Bvipo0ePpsgESK5MZM4kkdku2rZv35755JNP1goAF2P8Lbfc8usRI0aofYmCAgMDuSH5OPXMCAsLC5XN5j/96U+rZALkCwHAVwSEhobOfeSRRwbcdtttzpCQEJuAXyHA/gpLliw529zcnC0fQHcINuZud2r/D9kJa4uKito/a9as0x999JEAAMCCPKtA7HZ726RJk9648847b5Yv57AKBPBPtbW1hbKfmyP7uTMF2kNJbm5umgBwwVQfQv4MGDhw4Hflj4DfaRs1alSyPJIAAXyE7NsFBAUFTVYE/BLLIL+CHHRwb9myRdWaPS3Q7vT+HzWFhYWZatBHAABgcXfddVdxQ0PDK7JZS/ID8E9qo+6dO3eqzdAbBS6LGsSV8ocMGZIuAFww1YfQ8Tb8kBxobWtqanIJAD6De6r/4y/4NVwulwpeDunON9pZa2tr1t/+9rfDAgAAeLzwwgvv1tbWbhEA/FZLS8teeVArQQQunRrElYOAqiRxhQAA62iTY1A8QACgHZEA+RoFBQUn5SBELrMw25c3oWSz2fYfP378mAAAAB4/+9nP6j788EO1CuQYEzAA/5SamnpYDtznMVvwsp3Zvn172qJFi5gJDQAAgEtGr/xr2O12pxyEUGWw6gTajU4oNaWlpWUmJiY6BAAAOOfQoUN7qqqq3pDPS2b/AX5IxhANu3fv3i+bzSQyL41ePVMYFha2TwAAAACXgQTIN5BBi+p0Fwq0KxnUFLz55puHBAAA+AdqAsbevXtflU3PwB8DqIDfcQcFBe2SxxLva4GLolbPVFRU5CUnJ58QAAAAwGUgAfIN3n///cLS0tJ8gXYlg5o0m82WJwAAwPk8yyRvvfXWw2fOnFkjm036PAOogB/56KOP8quqqvL1ymfq6V4EnfRtSE9P3y8Tws0CAAAAuAwkQL7Ba6+91rRnz54M2aRUU/txbd++PfMPf/gDpcUAAPhH5xIdcuDv7erq6g/UAKocEGQAFfAjRUVFtQUFBSmy2coqrkuiVs+kCAAAAOAykQD5Zm09evRQJShOELy0D/k+npAJkGwBAAC+jCfZ8cILL1Tu27dvpWyW6VnkAPxEYmKiq6mpaY9slglcFHW/O3HiRP4rr7xCGWIAAABcNhIgF6CxsTFLHooYfGgf8n082K9fvywBAAC+jJpx4el07N27d2d1dfWb6pzeFJjZGICfeP3113NPnz6dTwxx0Ry5ubkHZBKpXgAAAACXiQTIBfjTn/5UnZ+fr8pgtQlctubm5ux/+7d/Oy0AAMDXstvtjpSUlDWymak2BRbsJQD4jcLCwsra2tpk2XTqBCa+gX6fTg8aNEi9by4BAAAAXCYSIBcgKSnJqYOXM7oMFrMvL13l5s2bMwMCAngPAQD4audWgdxyyy2ZDQ0Nr8pmC4OogP9QMURJSclu2TyrE5j4Bvp9Kjp+/HiuAAAAANoBPfELVFBQkCGTH8f1EnZmX14CnTzKbW5uThMAAOCbeJIgatJAbm7uetneqQYHKYUF+AVPvLB8+fLcU6dOHRa4UG1FRUWpv/vd76r0a+IuAAAAXBYSIN/M0+l+9dVXT+fl5WUIXDKVPKqrq8stlgQAALhgM2fOLEtJSVklm5WUwgL8gidJWVFRUV5fX79XUEr3m3j3OaqWMcOepKSkZu95AQAAAFwGEiDfzNPp3r59e6M8qDJYdZSfuGSNH3zwwUFVz1wAAIALca4U1ltvvfWBy+VKVG36IoB/UAP5ffr02SObNXxvv1aASu663e7i5OTkLAEAAAC0ExIgF879xRdfpLW2tpZRw/fi6fJXhXLgJlUAAICL9uyzzzZt375d7QVymL4I4Bc8ycuPPvooV/aFi/jefrOTJ0+myWRvmX7JSjcAAABcNnrhF8bT+V65cmXxkSNHcgQumip/VVZWdnjnzp2HBAAAuBjnVoHsk5xOp0qCOPXkAgA+bt26dSdqamrUKhCWgHwFfT9rDA4O3vPuu+/WeU8LAAAA4DKRALkwns730KFDq8PDw1UNXwdL2C+aMykp6eCqVavqBQAAuFievojdbm/7/PPP18nmbjW5AIBP83xvt27d2igTl6qUbhOJyy+n7mdqpX1iYmKmAAAAANoRCZCLIDvkLpvNdkA2qxh0uHA60DsRHR29XzCTCwCAS+XpfNxwww3FO3fufEU26wQAX+f53so4IkcmQY4SQ3y18vLy9PXr15fol7xRAAAAaBckQC6cpxP+0ksvFTU3N+cTvFy0I2FhYRkCAABcqnOlsHbt2rW5tbV1iwDg6zyTfw4cOHDU4XDs8ZxgFcg/0CvrHVFRUck333zzGX2aNwkAAADtggTIhfN0wnfv3n26qalJLWFvowzWhVHJovz8/MwNGzacFQAA4HJ4S2HVyz7JStksEQB83qpVq+qam5tTZNPBRKp/pDeHr5EyVJk/AQAAALQjEiAXKSkpqbm8vFyVwWrQnXV8DZ0kOiPfs5QVK1a0CgAA0C4+++yzXfI5+5pgUgbgF5YvX+4pgyXwL2RyKGv16tWF+iUZIgAAALQbRvAvjqczLoOXvMbGRoKXC6CTRCWlpaVpAgAAtBu73e5cu3bt63JAdT+TMgDfV15ersroqlUglMHSdPLWLY/JOTk5pfo0bw4AAADaDdHyxfF0xtPT0483NzezofcFysrKyl21atVJAQAA2tXSpUvz9u/fv0o2m7wDiQKAT/rzn/9cferUKbWS3EkZrL/TyduGo0ePpicmJjoEAAAA0M5IgFyCpKSk6ujoaJUAaaXkxDeqr6mpSd6+fXujAAAA7U4+Yze6XK5teiCRUVXAhy1fvjxLfl9PCJzT2tqa98ILLxzWL7mHAQAAoF2RALlEaWlpOfJQRsmJr6aTQ6f79u3LahkAANqfZ6DQbrefSU9Pf0U2y5iYAfi2oKCgbJvNtk+1rV4Gy3v96v2IjIws8p4WAAAAQDti9P7ieQYbVqxYcaSlpYV9Lb6GSg45HI78HTt2FAkAANDezg0UHj16dGdra+tb6tmrBxUZRAR8kEpYZmVlqRiizeplsPT1O/bt25fxzDPPNAgAAACgA5AAuXieAYWVK1eestlsamVDG5sY/iv9njiOHz+evHr16loBAAA6gmcEcdGiRY7Dhw+vls2D6rV8DlNGBvBRGzduVN/TUgHhdDqPrVu3LlcAAAAAHYQEyCUKCAhw79ixI0s2a9jE8CtVBwYGpqSmprYKAADQEdSMA09HJC4uLrOpqelV2S9xnPc7AD7G4XCoBEi6gIqp0qKjo/MEAAAA0EFIgFyGrVu3Hna73ZmqzSqQf6SSQnIQpmjt2rWHBQAA6EieToianPHss8++KQdXP1HP4ba2tgBBEgTwOb/5zW/K9u7dqxIgVv9+uuW9KuO3v/1tpQAAAAA6CAmQy+ByuY44nc5U1WYVyP+jN2B1V1dX75NJonIBAAA6mqcj8p//+Z+nCgoK1IbolbpvQgcF8D1qJXmGPFYIazv9/vvv5wgAAACgA5EAuQwrVqxofeONN7Jls1ngHLUBq1QvqfJXjQIAAHS0c6Wwdu/evc3lcm3Uq0C8vwPgQ/r3768mUWUKa8tIS0uz+nsAAACADkYC5DIlJyfnyMGFfIF/0NDQcOL5559nQ0MAADrZ448/3njq1KmVspmvJiXoUlgAfEiPHj1Otra2Wnrwv6WlRV3/CQEAAAB0IBIgl2nGjBmH5OCC2siQfUDOU1dXd0A6LgAAQGc5twpk5cqV+48fP/66bDr1ykwAPmTRokWuDz/8UK0COSusqXbjxo1Zdru9TQAAAAAdiIj4Mi1btqzu7NmzWbLpYh+Qc/t/OLp167Zv7969Vg3oAADoKp4kiBpUXLVqlUqA7FIn9fMZgA+pqanZJw+5VptEpa83W8ZQ6QIAAADoYCRA2sHbb7+tlm+z2kGc2//jTHZ2NvV8AQDoQjIJciwnJ2e1bNaxCgTwPY2NjcXNzc3ZVptEpa5XJn9yz5w5UyQAAACADkY03A6amppUCaxsAQ8ZyGW89NJLRwUAAOgK50phffLJJ5vlYYvnJKU6AZ/y+OOPt+7cuXO/bNYKa2nesmVLpkzSNgsAAACgg5EAaQfV1dUVpaWllk+A6IGVtsDAwJT6+vpSAQAAuornofzkk0/WFhcXr5LN45TqBHzSXvlz2GIJykK1X6AAAAAAOgEJkHag6my///77ahXIGWFhemClbufOnZmJiYkuAQAAupLnwfzQQw99kZeX95psshEI4GMOHDhwtKqqKtcqCUqd6MkfMWJEjgAAAAA6AQmQ9pMmf/KFxTmdzpyNGzda/n0AAMAHeEYak5KSnB999NFa2WTGNeBj7HZ7S1paWops1lthFYhM9LiKi4sPzps3r04AAAAAnYAESDtRs7dycnIOCYtzuVwHBg0axP4fAAD4kKeeeipfUhuiNwkAvsRts9n2yGOJMJxO8JyQCR+17wmbEgEAAKBTkABpJytWrGjdu3dvhmw2Cutqfuedd9jQEAAAH/Txxx8nysM2AcCnbNy48cjJkydzTC+Dpa+vUCZ80gUAAADQSUiAtKNBgwbtk4cjFtvE8Jy2trYjO3fuzBUAAMCXeEYdf/SjH1UWFBSoDdFP674KM7ABH/D888/Xnz59Wq0CaZL9aWGynJycrPfff/+sAAAAADoJCZB2JAcT1N4XBVbZxPCfBQYGpk2aNMnyZcAAAPAx5xIdra2tO+ThTdVXkQOtAYIkCOAL2s6cObNXHktlf1qYSCd2zpw8eTJFrZwXAAAAQCchAdKO9u3bV5+SkqLKYDmF9bTV1dVl/eQnP6kWAADA13hmZ8TFxTm2bdv2qtvtztYDrdactQH4Ds938JVXXikoLi7OFIbS95tjNTU1BwQAAADQiUiAtCO73a6SACmyWapnOVlpVmXp2rVrswUAAPBFqk/iGWjdt2/fwRMnTqgN0R0W7K8Avsb7/aupqKhIlkdj99LLzMzM+fWvf31KAAAAAJ2IBEg7kwMKB10u1xELzqrMlEGbsbPWAAAwgGegVU3Y2LFjx5tut/tTVoEAviExMdEdEBDQIpumbgJSf/bs2WSZBGkQAAAAQCciAdLOnnnmmbMpKSkqEWCp2ZRlZWXZMmgrFQAAwJd5kh3Lli0rlVbKZqXaEF1vig6giyxevDhq0KBBV8hmhDCMXmlW2r9///0CAAAA6GQkQNpZTk6Ow+VyqU0Mz1poMKHmrbfeylIzSgUAAPBl50phpaWlvS8Pm9SG6LrPQhYE6CJPPfXUyH79+iWYGD+olWYOhyNP3nOOCAAAAKCTkQDpAAMHDkyTh+PCOg7JwCZNAAAAv3Hbbbc1rpZk8zClsICuJRORs+RhoDCMTui0HDlyJPlvf/tbnQAAAAA6GQmQ9uUZOFi+fPmphoYGVRJKWEROdHQ0M7oAAPAP51aBlJSUJFdWVq6VTSdlsICu8cc//jFy5MiRs2Uz0tD44ay8rpSkpCSnAAAAADoZCZD25Rk5+MMf/tCgBhRks1HXvDVZc3Z2dubSpUubBQAA8BeeJIgqX/nBBx+8IZMfeyiFBXSNWbNmDevevfskE5OQ6r7S1NR0+O233y4QAAAAQBcgAdIx2mRHP1Uey01eBaKDtCMHDx5MFQAAwC8tWbLkaF1d3SuyWaeTIJTCAjpRa2urKn81zLS4QU8Ec9XU1KR8/PHHFQIAAADoAiRA2p8nclm/fv2Rs2fP5pmcANHXdjgkJCRbAAAAf3OuFNbWrVu3NDU1bVVtC5XwBLrc6tWrw6688kqVAIkRhtF7C9VXV1er8lesFgcAAECXIAHS/jzLIg4cOHC2ubk5RXgmP5lbBislJSVr0aJFbGgIXxQmzCZzjyE2ASPIQaIQYbYAt9sdKuCLPP2W+++/v1YOxKpVICc8Jw0sxSOvKcZmswUJwIf0799/aFhY2ERT44X6+vpjy5cvPyQAHyIT/epZQL8EvirI5XIFC8CPEOvB1xEEdhC1yd+pU6f2xMbGlsqBrYHyVIswi7q5FVVUVKi9Tozf6AT+ZcKECWrkrkG/dAjzPqPq+9cYGRnpEDCCfE40yYN3c1jTNolVfQ13aGhoY48ePdhbwjepJR9u+Uz/Qg5WroyKivqJHBxSk2RMuceoawmR13Q8IiKiSQA+JDg4+Ep5GKNXSxintrZ23969e08KwIfExMSo51u9+PuEKdPidPi3YPk8aJZxHp9L+JXo6GjVx1axnkuYF8/CACRAOoZnIOF//ud/0n74wx/+epBUU1PjvRn4vba2tgCbzRbes2fPotLS0n0C8DGpqamtvXr12tjU1FTS0tLSLDuRRiVA5CBemBxIrj9y5Ajl5wzwy1/+0p2dnf2pHJhtq6ura5N/X6M6jG63O1h2iNUs4F1VVVUkzH2Tp39it9udjY2NKx599NFc+awPl22nfN6b0HcJkAm4IPksqM7Pz88TgI+Q37mQOXPmzJTN7sIwakWLGsST8UKKVCsAHyKTcnljxoz5/dmzZ7vJfheJcfgENc4SFhYWIu+dLSUlJekC8CN5eXmfFBcXB8qYr9XlcpEAgc+hyHMHW7hwoU0OUho5pWv+/PkuGbgxmAVf40lAmvzd89LfQTU4yax6Pyf/joFbt241uqTZiBEj2hITE10Cvspz7xTWYKVrhQ977733Rtx6661rZKL4GkP33jmanJx876xZs1RZYL538BWqLKe4/vrrbXV1dYyHwCcR58HPBMjPa4Dp8SyAL2elzhQdR/gSq30e+f75P/6G8BVW+SzynYNPeP755++WA7Fn3IZqaGhIfOSRR/oJwLfwDIC/4LMKf8FnFT6PTdA7jpUy9cxKgC+x2ueR75//428IX2GVzyLfOXQ5tVJ1+vTpM2SzlzCMzH2ogyqhl/LKK6+cFoBv4RkAf8FnFf6Czyp8HgkQAAAAAOhEV1999cArr7xyijCQLudV/emnn2YJAAAAoIuRAAEAAACATuRwOBLkYZIwlNPpTN+wYUOBAAAAALoYCRAAAAAA6DwBt95661R5NHZ/DJkAOTB06NASAQAAAAAAAAAArOH3v/99rNvt3uo2V93atWvvEQAAAIAPYAUIAAAAAHQSl8sVLw/ThKGcTmduUlLSIQEAAAD4ABIgAAAAANBJlixZojY/7y8M43a7PcegoKC0iRMnHhYAAAAAAAAAAMAafvzjH/eTiYK3VZ2otrY2t4FaampqfiAAAAAAH8EKEAAAAADoBIMGDYqTSYIZqh0QECAMdHTdunVZAgAAAPARJEAAAAAAoBM89thjk2XiY6AwV0Z5eTkJEAAAAAAAAAAArGLJkiW9nE7nOlUnyuVyuQ3UVlpa+p8CAAAA8CGsAAEAAACAjuOpdTVr1qxxNpvtStUODDQyDCvduHHjQQEAAAD4EBIgAAAAANBx3Oof999//yR5GCTMlRMdHZ0uAAAAAB9CAgQAAAAAOoZn9ceCBQu6BwUFqdUfIW63W5goLy8ve8mSJacEAAAA4ENIgAAAAABAB7rvvvtGhoWFzVLtgIAAYaCqjz/+OF1eW5sAAAAAfAgJEAAAAADoGJ7lHjfddNNkeRjc1mZefkCvaDk8cODAVAEAAAD4GBIgAAAAAND+PEs9Fi9eHON0OmfLZriJm5/rFS25NTU1RwUAAAAAAAAAALCGTz75JM7tdme6zdW4d+/eJwUAAADgg1gBAgAAAAAdJD4+XpW/GmZi+St9TUfPnj2bIgAAAAAfRAIEAAAAANqXpy5UQkJCRHl5+dWyGWVi+St1TS6Xq6CqquqQAAAAAHwQCRAAAAAAaF+encHj4+Nj+/TpM1PohIiBWvfu3Zt+//331wsAAADAB5EAAQAAAIAO8L3vfW9Kz549RwjzuHX5qzJ53CuP5tX3AgAAgBFIgAAAAABA+/Gs9pgzZ05Yt27dVPmr7gbu/xGgyl81Nzcf3bVrV5YAAAAAfBQJEAAAAABoP57yV1dccUVfXf4q0MT9PyR3enp62urVq88KAAAAwEeRAAEAAACAdnbXXXdN6d69+0i325MPcQuD6BUtVUFBQcmFhYUtAgAAAPBRJEAAAAAAoB3FxcWFyMSHKn/VR58yahP0gADP5ZRER0enCwAAAMCHkQABAAAAgHb06KOP9pg8efJ02QzUyQKjqGuqrKzMXL169SnvKQEAAAD4IBIgAAAAANCOZPIjPiwsbIzB5a8aqqur9/zhD3+o06eNukYAAACYgwQIAAAAALQfW1BQ0FXyOECv/jBqdYTe0P20lCYAAAAAH0cCBAAAAADayV//+tfus2fPTpBNmzDUmTNnsl9++eVi/ZLyVwAAAPBZJEAAAAAAoJ3ExsZOsdls43SpKKPoa3IEBATsaW5urtSnKX8FAAAAn0UCBAAAAADaR0CfPn1my+MQXSrKKPqaatPT01MTExNdAgAAAAAAAAAAmG/58uXd3G73O26DVVZWfjZ//vzh+pIpfwUAAACfxgoQAAAAAGgHISEhk+VhgjBXm8yB7K2rqzulX1P+CgAAAD6NBAgAAAAAtIMpU6bMlIdRwkAy8aEOjaGhoalJSUnNAgAAAPADJEAAAAAA4DK98MILUVMl2QwSBgoICFBJkKItW7bkeU8JAAAAwMeRAAEAAACAy9Ta2honD5OFgfTqD+FwOFI++eSTY97TAgAAAAAAAAAAmK2goOCHMlHQ7DZXS21t7aMCAAAA8COsAAEAAACAy7B8+fKIUaNGxctmqNtt5sKItra2k6tXrz6kX1L+CgAAAH6BBAgAAAAAXIa6urrx8jBNtdVeGSbxJnTkcX9WVlaB97QAAAAAAAAAAABmq6ysfFgmCBrd5nKVl5f/XAAAAAB+hhUgAAAAAHCJ7HZ7WM+ePVX5q3C3oeWv5HVVLl++PFsAAAAAfoYECAAAAABcooKCgtGtra1XqLZp5a+82tra0ktLS3MFAAAA4GdIgAAAAADAJbrmmmsmBgUFxQkDeVe02Gy29Ouvv75YAAAAAAAAAAAA8y1cuDCkvr7+D26z1eXk5NwvAAAAAD/EChAAAAAAuAShoaHDQ0JCZqm229D9P6TcrVu3ZgkAAADAD5EAAQAAAIBLMH/+/PHBwcGTVdvU/T+kgzLJc1gAAAAAAAAAAADzPfbYY8ENDQ3/1+12u9ra2tyGaklJSXlCAAAAAH6KFSAAAAAAcOE8Sz2qqqoGyQTBVbIZaOLqD/ffS3oV7d69O0MAAAAAfooECAAAAABcOE9m4PHHHx8bGRk5WRhKJXVkEiRXXmOmAAAAAAAAAAAA5pszZ05QTU3N/ycTBK0ul8ttKNeOHTt+KfSKFwAAAMAfsQIEAAAAAC6MJxkwcODA/vKgyl8FBQYaG1KdyMnJSRV6xQsAAADgj0iAAAAAAMCF8SQDnnrqqVExMTHGlr9y/33/j8MTJkxIEwAAAIAfIwECAAAAABdo4cKFtkGDBs2UzZ5tbW3CRGr/j6amppw9e/aUCwAAAMCPkQABAAAAgAvUv3//nmFhYdfIZqjB5a/Ofvrpp6l2u90pAAAAAD9GAgQAAAAALtCjjz46qnv37pN1mSjj6FUtR2RyZ58AAAAA/BwJEAAAAAC4MIFBQUFXymMfUxMgalVLVVXVIalEAAAAAAAAAAAA8/3ud7/rVldX947bUC6XSx3qP/300x/Jyw0QAAAAgJ9jBQgAAAAAXIC5c+eOjIqKmug2dPWH2vxcOimPKfJo5kUCAADAUkiAAAAAAMA3C3A4HLPkcZAwlEqAlJaWHv7www8LBQAAAAAAAAAAMN8LL7wQJRMg69xma0lKSvr/5OUGCQAAAMAArAABAAAAgG8wderU4cHBwRPb2tqEifR1VcTGxibLo1MAAAAABiABAgAAAADf4NSpU6r81fDAQDNDKH1dRwoLCw8JAAAAwBAkQAAAAADga8yaNSs8NjZWJUCihbnaiouLD/zhD384o18HCAAAAAAAAAAAYK7Vq1ePc7vdKW5DuVwudaiSCZCFAgAAADAIK0AAAAAA4GtERERcIQ9jZZJAmEiXvyrZv39/lgAAAAAMQgIEAAAAAL7CwoULQ0aPHq0SIN0CAsytClVWVpa6adOmUv2S8lcAAAAAAAAAAJhszZo1I91u9xduQ7W1talDQ0VFxaMCAAAAMAwrQAAAAADgK7S2ts6UhwnCUGpVi8vlqnjrrbcyBQAAAGCYIAEAAAAA+BcbNmywJSQkTJfNnsJglZWV6a+++mqxfqnKX5m52QkAAAAshxUgAAAAAPAlysvLB40YMWKyMFRbW5s6OCMjI5NvvfXWcn2a5AcAAACMQQIEAAAAAL6ETBAkyMMUYajAQE84WF1bW5tht9vbBAAAAGAYEiAAAAAA8E8ee+yx4MWLF8+SzT7CYC0tLftfeOGFPAEAAAAYiAQIAAAAAPyT8ePH9+7Zs+cY1Xa7ja0K1dbc3Jyze/fu0wIAAAAw0P8P/wqDtT4kR6EAAAAASUVORK5CYII=" alt="VINYL C">
+  <div class="closing__line"></div>
+  <div class="closing__slogan">Practical UX</div>
+  <div class="closing__slogan-kr">가장 쓸모있는 경험을 디자인합니다</div>
+</section>
+
+</div></div>
+
+<div id="pop" hidden>
+  <div id="pop-back"></div>
+  <div id="pop-card" role="dialog" aria-modal="true" aria-labelledby="pop-t">
+    <button id="pop-x" type="button" aria-label="닫기">닫기</button>
+    <p class="pop-eb">용어</p>
+    <h2 id="pop-t"></h2>
+    <div id="pop-b"></div>
+  </div>
+</div>
+
+<div id="fs-hint" aria-hidden="true">F 또는 Esc 를 누르면 나갑니다</div>
+
+<nav id="nav">
+  <button id="prev" type="button">‹ 이전</button>
+  <span id="counter">01 / 20</span>
+  <button id="next" type="button">다음 ›</button>
+  <span class="hint">← → 넘기기 · F 전체화면</span>
+</nav>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('#scaler .slide'));
+  var scaler = document.getElementById('scaler');
+  var stage  = document.getElementById('stage');
+  var counter= document.getElementById('counter');
+  var prev   = document.getElementById('prev');
+  var next   = document.getElementById('next');
+  var i = 0;
+
+  function pad(n){ return (n<10?'0':'')+n; }
+  function show(n){
+    i = Math.max(0, Math.min(slides.length-1, n));
+    slides.forEach(function(s,k){ s.classList.toggle('is-on', k===i); });
+    counter.textContent = pad(i+1)+' / '+pad(slides.length);
+    prev.disabled = (i===0);
+    next.disabled = (i===slides.length-1);
+    if (location.hash !== '#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+  }
+  function fit(){
+    var s = Math.min(stage.clientWidth/1280, stage.clientHeight/720);
+    scaler.style.transform = 'scale('+s+')';
+  }
+  prev.addEventListener('click', function(){ show(i-1); });
+  next.addEventListener('click', function(){ show(i+1); });
+  // ── 용어 팝업 ──
+  var TERMS = {
+    terminal: {
+      t: '터미널',
+      one: '컴퓨터에 <b>글자로 명령을 시키는 창</b>입니다.',
+      rows: [
+        ['무엇','평소 쓰는 화면은 <b>눌러서</b> 시키고, 터미널은 <b>쳐서</b> 시킵니다. 같은 컴퓨터의 다른 입구입니다.'],
+        ['맥에서 열기','<b>command + 스페이스</b> → “터미널” → 엔터. (응용 프로그램 › 유틸리티 › 터미널)'],
+        ['윈도우에서는','<b>PowerShell</b>이 그 자리입니다. 시작 메뉴에서 찾으시면 됩니다.'],
+        ['왜 나오나','도구를 깔 때 몇 가지는 여기서만 됩니다. <b>Claude를 쓰는 일과는 별개</b>입니다.']
+      ],
+      note: '<b>어려운 곳이 아닙니다.</b> 붙여넣고 엔터 치는 게 전부이고, 칠 명령은 점검기가 안내서에 적어 줍니다. 외우실 것 없습니다.'
+    },
+    ide: {
+      t: 'IDE',
+      one: '<b>코드를 쓰려고 만든 편집기 프로그램</b>입니다.',
+      rows: [
+        ['이름','Integrated Development Environment — 통합 개발 환경'],
+        ['쉽게 말하면','글을 쓰는 프로그램이 한글·워드라면, <b>코드를 쓰는 프로그램</b>이 IDE입니다.'],
+        ['대표','VS Code · JetBrains · Cursor'],
+        ['왜 나오나','Claude Code를 이 안에 붙여 쓸 수 있습니다. <b>여러 조수를 동시에 굴릴 때</b> 편합니다.']
+      ],
+      note: '<b>우리는 쓰지 않습니다.</b> 데스크탑 앱으로 충분하고, IDE는 우리가 쓰기엔 쓸데없이 복잡합니다. “이런 길도 있다” 정도만 아시면 됩니다.'
+    }
+  };
+  var pop = document.getElementById('pop');
+  var popT = document.getElementById('pop-t');
+  var popB = document.getElementById('pop-b');
+  function openPop(key){
+    var d = TERMS[key]; if (!d) return;
+    popT.textContent = d.t;
+    var html = '<p class="pop-one">' + d.one + '</p>';
+    d.rows.forEach(function(r){ html += '<div class="pop-row"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'; });
+    html += '<div class="pop-note">' + d.note + '</div>';
+    popB.innerHTML = html;
+    pop.hidden = false;
+    document.getElementById('pop-x').focus();
+  }
+  function closePop(){ pop.hidden = true; }
+  document.querySelectorAll('[data-pop]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.stopPropagation(); openPop(el.getAttribute('data-pop')); });
+  });
+  document.getElementById('pop-x').addEventListener('click', function(e){ e.stopPropagation(); closePop(); });
+  document.getElementById('pop-back').addEventListener('click', function(e){ e.stopPropagation(); closePop(); });
+  document.getElementById('pop-card').addEventListener('click', function(e){ e.stopPropagation(); });
+
+  // ── 전체화면(발표) 모드 ──
+  var hint = document.getElementById('fs-hint'), hintT;
+  function inFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+  function enterFs(){
+    var el = document.documentElement;
+    var r = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (r) r.call(el);
+  }
+  function exitFs(){
+    var x = document.exitFullscreen || document.webkitExitFullscreen;
+    if (x) x.call(document);
+  }
+  function toggleFs(){ inFs() ? exitFs() : enterFs(); }
+  function onFsChange(){
+    var on = inFs();
+    document.body.classList.toggle('is-fs', on);
+    fit();
+    if (on) {
+      hint.classList.add('on');
+      clearTimeout(hintT);
+      hintT = setTimeout(function(){ hint.classList.remove('on'); }, 2600);
+    } else {
+      hint.classList.remove('on');
+    }
+  }
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
+  // 자판이 한글이어도 같은 키로 동작한다 — 'f' 자리는 한글에서 'ㄹ'이 찍힌다
+  function isFsKey(e){
+    if (e.code === 'KeyF') return true;
+    var k = e.key;
+    return k === 'f' || k === 'F' || k === '\u3139';
+  }
+
+  document.addEventListener('keydown', function(e){
+    if (!pop.hidden) { if (e.key==='Escape') { closePop(); e.preventDefault(); } return; }
+    if (isFsKey(e) && !e.metaKey && !e.ctrlKey && !e.altKey) { toggleFs(); e.preventDefault(); return; }
+    if (e.key==='Escape' && inFs()) { exitFs(); e.preventDefault(); return; }
+    if (e.key==='ArrowRight' || e.key==='PageDown' || e.key===' ') { show(i+1); e.preventDefault(); }
+    else if (e.key==='ArrowLeft' || e.key==='PageUp') { show(i-1); e.preventDefault(); }
+    else if (e.key==='Home') { show(0); }
+    else if (e.key==='End') { show(slides.length-1); }
+  });
+  stage.addEventListener('click', function(e){
+    if (e.clientX > window.innerWidth*0.5) show(i+1); else show(i-1);
+  });
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', function(){
+    var n = parseInt((location.hash||'').replace('#',''),10);
+    if (!isNaN(n) && n-1 !== i) show(n-1);
+  });
+  var start = parseInt((location.hash||'').replace('#',''),10);
+  fit(); show(isNaN(start)?0:start-1);
+})();
+</script>
+</body>
+</html>

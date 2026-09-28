@@ -1,0 +1,357 @@
+<title>아티팩트가 뭔가요</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#F7F5F1; --card:#FFFFFF; --sunk:#EFECE5;
+    --ink:#1B1A18; --sub:#63605A; --faint:#948F87; --line:#E3DFD7;
+    --stay:#6B2D4F; --staybg:#F8EDF2;   /* 남는 것 — 아티팩트 */
+    --flow:#2A6A6B; --flowbg:#E7F0F0;   /* 흐르는 것 — 대화 */
+    --warnbg:#FBF0DE; --warnink:#7A5410;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#17161A; --card:#211F26; --sunk:#1B1A20;
+      --ink:#EFEDE8; --sub:#ABA69D; --faint:#7D786F; --line:#332F39;
+      --stay:#E8A2C4; --staybg:#2C1A25;
+      --flow:#82CCCB; --flowbg:#13272A;
+      --warnbg:#2C2214; --warnink:#E0BC74;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17161A; --card:#211F26; --sunk:#1B1A20;
+    --ink:#EFEDE8; --sub:#ABA69D; --faint:#7D786F; --line:#332F39;
+    --stay:#E8A2C4; --staybg:#2C1A25;
+    --flow:#82CCCB; --flowbg:#13272A;
+    --warnbg:#2C2214; --warnink:#E0BC74;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+    font-size:17px; line-height:1.85; letter-spacing:-.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px 110px; display:flex; flex-direction:column; gap:14px}
+
+  header{padding:56px 0 8px}
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.18em;
+    color:var(--stay); font-weight:500;
+  }
+  h1{
+    font-family:"Gowun Batang",serif; font-weight:700;
+    font-size:clamp(34px,7vw,48px); line-height:1.25; margin:14px 0 16px;
+    text-wrap:balance; letter-spacing:-.02em;
+  }
+  .lede{font-size:18.5px; color:var(--sub); margin:0; max-width:34em}
+
+  section{
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:30px 26px 26px; display:flex; flex-direction:column; gap:14px;
+  }
+  h2{
+    font-family:"Gowun Batang",serif; font-weight:700;
+    font-size:26px; line-height:1.4; margin:0; text-wrap:balance; letter-spacing:-.01em;
+  }
+  h3{font-size:17px; font-weight:700; margin:8px 0 0; color:var(--ink)}
+  p{margin:0; max-width:36em}
+  .big{font-size:21px; line-height:1.62; font-weight:600; max-width:26em}
+  .sub{color:var(--sub)}
+  strong{font-weight:700}
+  em{font-style:normal; color:var(--stay); font-weight:700}
+
+  code, .mono{
+    font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.85em;
+    background:var(--sunk); padding:2px 7px; border-radius:5px; word-break:break-all;
+  }
+
+  figure{margin:6px 0 0; display:flex; flex-direction:column; gap:10px}
+  .figbox{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  figure svg{display:block; width:100%; min-width:440px; height:auto; color:var(--ink)}
+  figcaption{font-size:14.5px; color:var(--faint); line-height:1.6; max-width:38em}
+
+  .callout{
+    border-radius:13px; padding:18px 19px; display:flex; flex-direction:column; gap:8px;
+    background:var(--staybg); border:1px solid color-mix(in srgb,var(--stay) 26%,transparent);
+  }
+  .callout .t{font-weight:700; font-size:16px; color:var(--stay); line-height:1.5}
+  .callout p{font-size:16px}
+  .callout.warn{background:var(--warnbg); border-color:color-mix(in srgb,var(--warnink) 32%,transparent)}
+  .callout.warn .t{color:var(--warnink)}
+
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:4px}
+  table{border-collapse:collapse; width:max-content; min-width:100%; font-size:15.5px}
+  th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{
+    font-size:12px; font-family:"IBM Plex Mono",monospace; letter-spacing:.09em;
+    color:var(--faint); font-weight:500; white-space:nowrap;
+  }
+  tbody td:first-child{font-weight:600; white-space:nowrap; color:var(--sub)}
+  tr:last-child td{border-bottom:none}
+
+  .two{display:flex; flex-wrap:wrap; gap:12px}
+  .two > div{
+    flex:1 1 230px; border-radius:13px; padding:18px 19px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .two .yes{background:var(--staybg)}
+  .two .no{background:var(--sunk)}
+  .two .lbl{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.12em; font-weight:500;
+  }
+  .two .yes .lbl{color:var(--stay)} .two .no .lbl{color:var(--faint)}
+  .two ul{margin:0; padding-left:19px; font-size:15.5px; line-height:1.72}
+  .two li{margin:5px 0}
+
+  footer{
+    color:var(--faint); font-size:14.5px; line-height:1.75; padding:6px 4px 0;
+    border-top:1px solid var(--line); margin-top:10px; padding-top:22px;
+  }
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">ELI5</div>
+  <h1>아티팩트가 뭔가요</h1>
+  <p class="lede">방금 우리가 GEO 문서를 올린 그것입니다.
+  그림 셋으로 설명하겠습니다.</p>
+</header>
+
+<section>
+  <h2>한 줄로</h2>
+  <p class="big">아티팩트는 <em>대화에서 꺼내 놓은 웹페이지 한 장</em>입니다.
+  <strong>주소가 있어서</strong>, 대화를 닫아도 남습니다.</p>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 700 300" role="img" aria-label="왼쪽 대화창에서는 말풍선이 위로 밀려 사라지고, 오른쪽 아티팩트는 주소를 가진 페이지로 고정된다">
+        <defs>
+          <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,0 10,5 0,10" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <text x="160" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">대화</text>
+        <text x="540" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="currentColor">아티팩트</text>
+
+        <rect x="20" y="46" width="280" height="214" rx="12" fill="none" stroke="currentColor" stroke-opacity=".22"/>
+        <rect x="400" y="46" width="280" height="214" rx="12" fill="none" stroke="currentColor" stroke-opacity=".22"/>
+
+        <rect x="44" y="62" width="196" height="30" rx="9" fill="currentColor" fill-opacity=".08"/>
+        <rect x="80" y="102" width="196" height="30" rx="9" fill="currentColor" fill-opacity=".14"/>
+        <rect x="44" y="142" width="216" height="30" rx="9" fill="currentColor" fill-opacity=".22"/>
+        <rect x="80" y="182" width="176" height="30" rx="9" fill="currentColor" fill-opacity=".32"/>
+        <line x1="32" y1="212" x2="32" y2="70" stroke="currentColor" stroke-opacity=".45" stroke-width="1.5" marker-end="url(#ar1)"/>
+        <text x="160" y="242" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".62">위로 밀려 사라진다</text>
+
+        <rect x="418" y="62" width="244" height="28" rx="7" fill="currentColor" fill-opacity=".07"/>
+        <rect x="428" y="69" width="14" height="14" rx="3" fill="currentColor" fill-opacity=".55"/>
+        <rect x="450" y="72" width="104" height="8" rx="4" fill="currentColor" fill-opacity=".38"/>
+        <rect x="418" y="98" width="244" height="24" rx="12" fill="currentColor" fill-opacity=".13"/>
+        <text x="430" y="114" font-size="11" font-family="monospace" fill="currentColor" fill-opacity=".8">claude.ai/…/1a234711</text>
+        <rect x="418" y="134" width="244" height="9" rx="4" fill="currentColor" fill-opacity=".2"/>
+        <rect x="418" y="151" width="212" height="9" rx="4" fill="currentColor" fill-opacity=".2"/>
+        <rect x="418" y="168" width="230" height="9" rx="4" fill="currentColor" fill-opacity=".2"/>
+        <rect x="418" y="185" width="180" height="9" rx="4" fill="currentColor" fill-opacity=".2"/>
+        <text x="540" y="242" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".62">주소에 붙어 남는다</text>
+
+        <line x1="312" y1="152" x2="388" y2="152" stroke="currentColor" stroke-width="1.8" marker-end="url(#ar1)"/>
+        <text x="350" y="140" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">꺼내 놓기</text>
+      </svg>
+    </div>
+    <figcaption>대화는 스크롤되어 묻히고, 아티팩트는 자기 주소를 갖는다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>어떤 형식인가요</h2>
+  <p><strong>HTML 파일 한 장</strong>입니다. 그 이상도 이하도 아닙니다.
+  글·표·그림·버튼·탭이 다 들어갈 수 있고, 올리면 <strong>진짜 웹페이지처럼</strong> 열립니다.</p>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 700 250" role="img" aria-label="HTML 파일 하나를 올리면 파비콘과 제목이 붙은 브라우저 창으로 열린다">
+        <defs>
+          <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,0 10,5 0,10" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <path d="M40 44 h108 l26 26 v146 a8 8 0 0 1 -8 8 h-126 a8 8 0 0 1 -8 -8 v-164 a8 8 0 0 1 8 -8 z"
+              fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5"/>
+        <path d="M148 44 v26 h26" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5"/>
+        <text x="56" y="96" font-size="11.5" font-family="monospace" fill="currentColor" fill-opacity=".82">&lt;title&gt;</text>
+        <text x="56" y="116" font-size="11.5" font-family="monospace" fill="currentColor" fill-opacity=".82">&lt;style&gt;</text>
+        <rect x="56" y="130" width="96" height="7" rx="3.5" fill="currentColor" fill-opacity=".2"/>
+        <rect x="56" y="145" width="78" height="7" rx="3.5" fill="currentColor" fill-opacity=".2"/>
+        <rect x="56" y="160" width="90" height="7" rx="3.5" fill="currentColor" fill-opacity=".2"/>
+        <rect x="56" y="175" width="66" height="7" rx="3.5" fill="currentColor" fill-opacity=".2"/>
+        <text x="107" y="238" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">.html 한 장</text>
+
+        <line x1="196" y1="132" x2="266" y2="132" stroke="currentColor" stroke-width="1.8" marker-end="url(#ar2)"/>
+        <text x="231" y="120" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">올린다</text>
+
+        <rect x="290" y="44" width="370" height="180" rx="11" fill="none" stroke="currentColor" stroke-opacity=".4" stroke-width="1.5"/>
+        <path d="M290 82 h370" stroke="currentColor" stroke-opacity=".22"/>
+        <rect x="302" y="52" width="164" height="24" rx="6" fill="currentColor" fill-opacity=".12"/>
+        <circle cx="316" cy="64" r="6" fill="currentColor" fill-opacity=".55"/>
+        <rect x="330" y="60" width="100" height="8" rx="4" fill="currentColor" fill-opacity=".42"/>
+        <rect x="302" y="94" width="346" height="22" rx="11" fill="currentColor" fill-opacity=".1"/>
+        <text x="313" y="109" font-size="10.5" font-family="monospace" fill="currentColor" fill-opacity=".78">claude.ai/code/artifact/1a234711…</text>
+        <rect x="302" y="132" width="200" height="12" rx="4" fill="currentColor" fill-opacity=".34"/>
+        <rect x="302" y="156" width="346" height="8" rx="4" fill="currentColor" fill-opacity=".18"/>
+        <rect x="302" y="172" width="312" height="8" rx="4" fill="currentColor" fill-opacity=".18"/>
+        <rect x="302" y="188" width="330" height="8" rx="4" fill="currentColor" fill-opacity=".18"/>
+
+        <text x="384" y="238" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".62">파비콘 + 제목</text>
+        <text x="560" y="238" text-anchor="middle" font-size="12" fill="currentColor" fill-opacity=".62">주소가 생긴다</text>
+        <line x1="384" y1="226" x2="384" y2="80" stroke="currentColor" stroke-opacity=".28" stroke-dasharray="3 3"/>
+        <line x1="560" y1="226" x2="560" y2="118" stroke="currentColor" stroke-opacity=".28" stroke-dasharray="3 3"/>
+      </svg>
+    </div>
+    <figcaption>올릴 때 브라우저 탭에 붙을 <strong>이모지 하나(파비콘)</strong>와 <strong>제목</strong>을 정한다. 그게 나중에 목록에서 찾는 표식이 된다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>고치면 어떻게 되나요</h2>
+  <p class="big"><em>같은 주소에 새 판이 쌓입니다.</em> 새 링크가 생기지 않습니다.</p>
+  <p class="sub">이게 아티팩트의 핵심입니다. 이미 링크를 받아 간 사람은 <strong>아무것도 안 해도</strong> 새 판을 보게 됩니다.
+  오늘 우리가 그렇게 세 번 올렸습니다.</p>
+
+  <figure>
+    <div class="figbox">
+      <svg viewBox="0 0 700 240" role="img" aria-label="세 번 올렸지만 주소는 하나. 판이 바뀌어도 링크는 그대로다">
+        <defs>
+          <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+            <polygon points="0,0 10,5 0,10" fill="currentColor"/>
+          </marker>
+        </defs>
+
+        <rect x="42" y="34" width="132" height="74" rx="9" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+        <rect x="56" y="50" width="76" height="8" rx="4" fill="currentColor" fill-opacity=".32"/>
+        <rect x="56" y="66" width="104" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <rect x="56" y="80" width="88" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <text x="108" y="128" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">① 처음 올림</text>
+
+        <rect x="284" y="34" width="132" height="74" rx="9" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+        <rect x="298" y="50" width="88" height="8" rx="4" fill="currentColor" fill-opacity=".32"/>
+        <rect x="298" y="66" width="104" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <rect x="298" y="80" width="72" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <text x="350" y="128" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">② 틀린 것 정정</text>
+
+        <rect x="526" y="34" width="132" height="74" rx="9" fill="currentColor" fill-opacity=".07" stroke="currentColor" stroke-opacity=".3"/>
+        <rect x="540" y="48" width="50" height="16" rx="4" fill="currentColor" fill-opacity=".3"/>
+        <rect x="594" y="48" width="50" height="16" rx="4" fill="currentColor" fill-opacity=".14"/>
+        <rect x="540" y="74" width="104" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <rect x="540" y="88" width="80" height="6" rx="3" fill="currentColor" fill-opacity=".2"/>
+        <text x="592" y="128" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">③ 탭 두 개로</text>
+
+        <line x1="184" y1="71" x2="272" y2="71" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar3)"/>
+        <line x1="426" y1="71" x2="514" y2="71" stroke="currentColor" stroke-width="1.6" marker-end="url(#ar3)"/>
+
+        <line x1="108" y1="142" x2="330" y2="180" stroke="currentColor" stroke-opacity=".33" stroke-dasharray="4 4"/>
+        <line x1="350" y1="142" x2="350" y2="180" stroke="currentColor" stroke-opacity=".33" stroke-dasharray="4 4"/>
+        <line x1="592" y1="142" x2="370" y2="180" stroke="currentColor" stroke-opacity=".33" stroke-dasharray="4 4"/>
+
+        <rect x="196" y="182" width="308" height="36" rx="18" fill="currentColor" fill-opacity=".13" stroke="currentColor" stroke-opacity=".34"/>
+        <text x="350" y="205" text-anchor="middle" font-size="12" font-family="monospace" fill="currentColor">claude.ai/code/artifact/1a234711…</text>
+      </svg>
+    </div>
+    <figcaption>세 판이 만들어졌지만 주소는 하나. 옛 판도 버전 목록에 남아 있어 되돌아갈 수 있다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>로컬 파일과 뭐가 다른가요</h2>
+  <p class="sub">둘 다 필요합니다. 하나를 고르는 문제가 아닙니다.</p>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th></th><th>내 맥의 HTML 파일</th><th>아티팩트</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>어디 있나</td><td>내 컴퓨터 안</td><td>클로드 서버</td></tr>
+        <tr><td>폰에서 열기</td><td>안 됨</td><td>링크로 바로</td></tr>
+        <tr><td>남에게 보여주기</td><td>파일을 보내야 함</td><td>링크 하나</td></tr>
+        <tr><td>고쳤을 때</td><td>내 파일만 바뀜</td><td>같은 주소에 새 판</td></tr>
+        <tr><td>기본 공개 범위</td><td>나만</td><td>나만 <span class="mono">비공개</span></td></tr>
+        <tr><td>없어질 위험</td><td>내가 지우지 않으면 남음</td><td>계정에 매여 있음</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="t">그래서 이 프로젝트는 둘 다 챙깁니다</div>
+    <p>아티팩트 링크만 드리지 않고 <strong>로컬 경로를 항상 같이</strong> 적는 이유입니다.
+    아티팩트는 <strong>읽는 자리</strong>, 로컬 파일은 <strong>정본</strong>입니다.</p>
+  </div>
+</section>
+
+<section>
+  <h2>언제 쓰나요</h2>
+
+  <div class="two">
+    <div class="yes">
+      <div class="lbl">쓰면 좋을 때</div>
+      <ul>
+        <li>남이 읽을 문서</li>
+        <li>폰에서 볼 것</li>
+        <li>여러 번 고칠 것</li>
+        <li>표·그림이 많은 것</li>
+        <li>링크로 건네야 할 것</li>
+      </ul>
+    </div>
+    <div class="no">
+      <div class="lbl">안 쓰는 게 나을 때</div>
+      <ul>
+        <li>코드 파일</li>
+        <li>한 줄이면 끝나는 답</li>
+        <li>나만 볼 작업 메모</li>
+        <li>밖으로 나가면 안 되는 내용</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>맨 아래 줄이 중요합니다</h3>
+  <p>아티팩트는 <strong>기본이 비공개</strong>입니다. 내가 공유를 누르기 전에는 나만 봅니다.
+  다만 <strong>한 번 공유하면 링크를 아는 사람은 누구나</strong> 열 수 있고, 되돌리기가 번거롭습니다.</p>
+
+  <div class="callout warn">
+    <div class="t">그래서 고객사 이름이 들어간 문서는</div>
+    <p>올리는 것 자체는 괜찮습니다 — 비공개니까요.
+    <strong>공유를 누르는 순간</strong>이 판단이 필요한 자리입니다.</p>
+  </div>
+</section>
+
+<section>
+  <h2>오늘 우리가 한 것</h2>
+  <p>말로만 설명하면 안 와닿으니, 실제로 벌어진 일을 그대로 적습니다.</p>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>순서</th><th>무엇을 했나</th><th>결과</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>진단 문서를 <span class="mono">.html</span>로 씀</td><td>내 맥에 파일 하나</td></tr>
+        <tr><td>2</td><td>아티팩트로 올림</td><td>주소가 생김 + 파비콘 🤖🔎</td></tr>
+        <tr><td>3</td><td>틀린 것 셋을 고쳐 다시 올림</td><td><strong>같은 주소</strong>, 새 판</td></tr>
+        <tr><td>4</td><td>실측 결과를 탭으로 붙여 또 올림</td><td><strong>같은 주소</strong>, 또 새 판</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="big">그래서 지금 그 링크를 폰에서 열면 <em>제일 최신 판</em>이 나옵니다.
+  링크를 다시 받을 필요가 없습니다.</p>
+</section>
+
+<footer>
+  이 페이지 자체도 아티팩트입니다 — 지금 보고 계신 이것이 예시입니다.<br>
+  주소는 브라우저 주소창에, 이름과 아이콘은 탭에 있습니다.
+</footer>
+
+</div>
